@@ -1,17 +1,24 @@
-const Db = require('../db');
 const bcrypt = require('bcryptjs');
-const { ObjectId } = require('bson');
 
 const User = module.exports = function( aux )
 {
-    this.id = aux._id.toString();
+    this.id = aux._id.toString(); // mongodb ObjectId to string
     this.username = aux.username;
     this.password = aux.password;
     this.salt = aux.salt;
-    this.role = aux.role;
-    this.activated = aux.activated;
+    this.role = aux.role; // admin can delete and activate user
+    this.activated = aux.activated; // flag to check unauthorized user
 };
+User.prototype.changePassword = async function( newPassword, confirmPassword )
+{	
+    if( newPassword !== confirmPassword )
+        throw new Error( "Password and confirm password do not match" );
 
+	const salt = bcrypt.genSaltSync( 10 );
+	const password = bcrypt.hashSync( newPassword,salt );
+
+	await Database.i.db.collection( "users" ).updateOne( { username: user.username }, { $set : { password: password, salt: salt } } );
+};
 User.prototype.activateUsers = async function( users )
 {
     if( this.role !== User.Role.ADMIN )
@@ -21,7 +28,7 @@ User.prototype.activateUsers = async function( users )
     {
         try
         {
-            await Db.i.db.collection( "users" ).updateOne( {username: user.username }, {$set : { activated: true } } );
+            await Database.i.db.collection( "users" ).updateOne( { username: user.username }, { $set : { activated: true } } );
         }
         catch( error )
         {
@@ -30,27 +37,36 @@ User.prototype.activateUsers = async function( users )
         }
     }
 };
-
 User.prototype.deleteUser = async function( deleteUser )
 {
     if( this.role !== User.Role.ADMIN )
         throw new Error( 'Only admin can delete users' );
 
     if( deleteUser === this )
-        throw new Error( 'Admin account cannot be deleted' );
+        throw new Error( 'self cannot be deleted' );
 
-    await Db.i.db.collection( "users" ).deleteOne( { username: deleteUser.username } );
+    await Database.i.db.collection( "users" ).deleteOne( { username: deleteUser.username } );
 
     return true;
 };
 
+User.getUsers = async function( pagination = 10, page = 1 )
+{
+	const users = [];
+	await Database.i.db.collection( "users" ).find().sort( { _id: 1 } ).skip( page > 1 ? page - 1 * pagination : 0 )
+	.limit( pagination ).forEach( ( user ) =>
+	{
+		users.push( new User( user ) );
+	});
+
+	return users;
+};
 User.login = async function( username, password )
 {
-  console.log(password);
     if( !username && !password || !username || !password )
         throw new Error( 'No username or password' );
 
-    const userObj = await Db.i.db.collection( "users" ).findOne( { username: username } );
+    const userObj = await Database.i.db.collection( "users" ).findOne( { username: username } );
 
     if( !userObj )
         throw new Error( 'Username or password is incorrect' );
@@ -69,7 +85,6 @@ User.login = async function( username, password )
     else
       throw new Error( 'Username or password is incorrect' );
 };
-
 User.signUp = async function( username, password, confirmPassword )
 {
     if( !username )
@@ -95,7 +110,7 @@ User.signUp = async function( username, password, confirmPassword )
 
     try
     {
-        const result = await Db.i.db.collection( "users" ).insertOne( aux );
+        const result = await Database.i.db.collection( "users" ).insertOne( aux );
         aux._id = result.insertedId;
 
         return new User( aux );
@@ -111,3 +126,4 @@ User.signUp = async function( username, password, confirmPassword )
 };
 
 User.Role = { NORMAL_USER: 0, ADMIN: 1 };
+User.byId = {};

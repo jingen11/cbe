@@ -1,14 +1,15 @@
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const mongodb = require( 'mongodb' );
 
-const Db = module.exports = function()
+const Database = global.Database = function()
 {
+    this.mongodb = mongodb;
     this.uri = `mongodb+srv://${process.env.dbUsername}:${process.env.dbPassword}@${process.env.dbName}.5dvkf.mongodb.net/?retryWrites=true&w=majority`;
-    this.client = new MongoClient(this.uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+    this.client = new mongodb.MongoClient(this.uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: mongodb.ServerApiVersion.v1 });
     this.db;
 }
 
-Db.prototype.initialise = async function( app )
+Database.prototype.initialise = async function( app )
 {
     try {
         await this.client.connect();
@@ -23,4 +24,4 @@ Db.prototype.initialise = async function( app )
     }
 }
 
-Db.i = new Db;
+Database.i = new Database;

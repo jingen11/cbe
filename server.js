@@ -1,14 +1,13 @@
-require('dotenv').config();
-const Db = require('./db');
-const app = require('./app');
-const User = require('./models/user');
+require( 'dotenv' ).config();
+require( './db' );
+const app = require( './app' );
+const Worker = require( './models/worker' );
+const Vehicle = require( './models/vehicle' );
 
-Db.i.initialise( app ).then(async ()=>{ 
-
-    const admin = await User.login('Cbe123456', '0125287019' );
-    
-
-    await admin.deleteUser(admin);
-
-});
+(async ()=>
+{
+    await Database.i.initialise( app );
+    await Vehicle.initialise();
+    await Worker.initialise();
+})();
 
