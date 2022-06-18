@@ -1,28 +1,14 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const session = require("express-session");
+require('dotenv').config();
+const Db = require('./db');
+const app = require('./app');
+const User = require('./models/user');
 
-const app = express();
+Db.i.initialise( app ).then(async ()=>{ 
 
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-);
-app.use(bodyParser.json());
+    const admin = await User.login('Cbe123456', '0125287019' );
+    
 
-app.use(
-  session({
-    secret: "jingen11",
-    name: "chat-app",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      maxAge: 1000 * 60 * 60 * 24,
-    },
-  })
-);
+    await admin.deleteUser(admin);
 
-app.listen(4000, () => {
-  return console.log("app listening on port 4000");
 });
+
