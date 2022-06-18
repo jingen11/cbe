@@ -1,3 +1,4 @@
+const fs = require( 'fs' );
 const Vehicle = require( './vehicle' );
 const Worker = module.exports = function( aux )
 {
@@ -10,6 +11,19 @@ const Worker = module.exports = function( aux )
     this.vehicle = aux.vehicleId ? Vehicle.byId[aux.vehicleId] : null;
 };
 
+Worker.prototype.toAux = function()
+{
+    return(
+        {
+            name: this.name,
+            icNo: this.icNo,
+            wage: this.wage,
+            dateJoined: this.dateJoined,
+            vehicle: this.vehicle,
+            id: this.id     
+        }
+    );
+};
 Worker.prototype.update = async function( newProps )
 {
 	const modifiedProps = {
@@ -45,7 +59,7 @@ Worker.initialise = async function()
 	});
 };
 Worker.newWorker = async function( workerObj )
-{
+{   
     if( !workerObj.name )
         throw new Error( 'name cannot be empty' );
 
@@ -60,6 +74,13 @@ Worker.newWorker = async function( workerObj )
     else
         workerObj.dateJoined = workerObj.dateJoined.getTime();
 
+    if( workerObj.icImage )
+    {
+        workerObj.icImagePath = `${workerObj.name}_ic_${Date.now()}.png`;
+        const temp = workerObj.icImagePath.split(' ');
+        workerObj.icImagePath = temp.join('_');
+    }
+
     const newWorkerObj = {
         name: workerObj.name,
         icNo: workerObj.icNo,
@@ -71,6 +92,9 @@ Worker.newWorker = async function( workerObj )
 
     const result = await Database.i.db.collection( "workers" ).insertOne( newWorkerObj );
     newWorkerObj._id = result.insertedId;
+
+    if( workerObj.icImage )
+        fs.writeFileSync( `./images/workers/${newWorkerObj.icImagePath}`, workerObj.icImage.buffer );
 
 	const newWorker = new Worker( newWorkerObj );
 

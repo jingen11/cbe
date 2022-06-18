@@ -9,7 +9,7 @@ const Vehicle = module.exports = function( aux )
     this.active = aux.active ? aux.active : false;
 };
 
-Vehicle.prototype.update = function( newProps )
+Vehicle.prototype.update = async function( newProps )
 {
     const modifiedProps = {
         id: this.id,
