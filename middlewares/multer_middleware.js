@@ -2,7 +2,7 @@ const multer = require( "multer" );
 
 const storage = multer.memoryStorage();
 
-const upload = multer( 
+const upload = module.exports = multer( 
 { 
     storage: storage,
     fileFilter: function( req, file, cb )
@@ -20,5 +20,3 @@ const upload = multer(
         cb( null, true );
     } 
 });
-
-module.exports = upload;

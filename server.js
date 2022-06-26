@@ -1,5 +1,7 @@
 require( 'dotenv' ).config();
 require( './db' );
+require( './session' );
+
 const fs = require( 'fs' );
 
 const app = require( './app' );
@@ -43,5 +45,8 @@ const Vehicle = require( './models/vehicle' );
     await Database.i.initialise( app );
     await Vehicle.initialise();
     await Worker.initialise();
+    setInterval(() => {
+        console.log( Session.byId );
+    }, 5000);
 })();
 

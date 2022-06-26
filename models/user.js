@@ -9,6 +9,17 @@ const User = module.exports = function( aux )
     this.role = aux.role; // admin can delete and activate user
     this.activated = aux.activated; // flag to check unauthorized user
 };
+
+User.prototype.toAux = function()
+{
+    return {
+        id: this.id,
+        username: this.username,
+        password: this.password,
+        role: this.role,
+        activated: this.activated
+    };
+};
 User.prototype.changePassword = async function( newPassword, confirmPassword )
 {	
     if( newPassword !== confirmPassword )
@@ -63,7 +74,7 @@ User.getUsers = async function( pagination = 10, page = 1 )
 };
 User.login = async function( username, password )
 {
-    if( !username && !password || !username || !password )
+    if( ( !username && !password ) || !username || !password )
         throw new Error( 'No username or password' );
 
     const userObj = await Database.i.db.collection( "users" ).findOne( { username: username } );
@@ -79,7 +90,7 @@ User.login = async function( username, password )
           return new User( userObj );
 
       else
-          return new Error( 'The account is not activated' );
+          throw new Error( 'The account is not activated' );
     }
     
     else

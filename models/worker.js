@@ -18,8 +18,9 @@ Worker.prototype.toAux = function()
             name: this.name,
             icNo: this.icNo,
             wage: this.wage,
+            icImagePath: this.icImagePath,
             dateJoined: this.dateJoined,
-            vehicle: this.vehicle,
+            vehicle: this.vehicle ? this.vehicle.toAux(): null,
             id: this.id     
         }
     );

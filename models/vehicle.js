@@ -6,9 +6,21 @@ const Vehicle = module.exports = function( aux )
     this.puspakomExpDate = aux.puspakomExpDate ? aux.puspakomExpDate : null;
     this.petrolCardNum = aux.petrolCardNum ? aux.petrolCardNum : null;
     this.touchNGoCardNum = aux.touchNGoCardNum ? aux.touchNGoCardNum : null;
-    this.active = aux.active ? aux.active : false;
+    this.active = aux.active !== null ? aux.active : false;
 };
 
+Vehicle.prototype.toAux = function()
+{
+    return {
+        id: this.id,
+        registrationNum: this.registrationNum,
+        roadTaxExpDate: this.roadTaxExpDate,
+        puspakomExpDate: this.puspakomExpDate,
+        petrolCardNum: this.petrolCardNum,
+        touchNGoCardNum: this.touchNGoCardNum,
+        active: this.active
+    };
+};
 Vehicle.prototype.update = async function( newProps )
 {
     const modifiedProps = {
