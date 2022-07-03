@@ -1,0 +1,24 @@
+.landing-page{
+    position: relative;
+}
+
+.page{
+    height: 100vh;
+}
+
+.center{
+    align-self: center;
+    justify-self: center;
+}
+
+.background-img{
+    position: absolute;
+    z-index: -99;
+    width: 100%;
+    opacity: 0.8;
+    bottom: 0;
+}
+
+.login-card{
+    width: 50rem;
+}

@@ -1,0 +1,27 @@
+.field{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+label{
+    margin-bottom: 0.8rem;
+}
+
+input{
+    border: 0.2rem solid transparent;
+    border-radius: 40px;
+    box-shadow: 0.2rem 0.2rem 2rem var(--primary-color-w300-transparent);
+    padding: 1.2rem 3.2rem;
+    transition: all 0.2s;
+}
+
+input:focus{
+    box-shadow: none;
+    border: 0.2rem solid var(--primary-color);
+}
+/* 
+.text-field{
+    border-radius: 0.4rem;
+    box-shadow: 0.2rem 0.2rem 2rem var(--primary-color-w300-transparent);
+} */

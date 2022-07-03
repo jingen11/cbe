@@ -14,16 +14,15 @@ const Worker = module.exports = function( aux )
 Worker.prototype.toAux = function()
 {
     return(
-        {
-            name: this.name,
-            icNo: this.icNo,
-            wage: this.wage,
-            icImagePath: this.icImagePath,
-            dateJoined: this.dateJoined,
-            vehicle: this.vehicle ? this.vehicle.toAux(): null,
-            id: this.id     
-        }
-    );
+    {
+        name: this.name,
+        icNo: this.icNo,
+        wage: this.wage,
+        icImagePath: this.icImagePath,
+        dateJoined: this.dateJoined,
+        vehicle: this.vehicle ? this.vehicle.toAux(): null,
+        id: this.id
+    });
 };
 Worker.prototype.update = async function( newProps )
 {
