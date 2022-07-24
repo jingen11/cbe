@@ -1,17 +1,17 @@
-.landing-page{
+.landing-page {
     position: relative;
 }
 
-.page{
+.page {
     height: 100vh;
 }
 
-.center{
+.center {
     align-self: center;
     justify-self: center;
 }
 
-.background-img{
+.background-img {
     position: absolute;
     z-index: -99;
     width: 100%;
@@ -19,6 +19,16 @@
     bottom: 0;
 }
 
-.login-card{
+.login-card {
     width: 50rem;
+}
+
+.error-text {
+    color: transparent;
+}
+
+.error-text--active {
+    color: var(--error-color);
+    text-transform: capitalize;
+    transition: all 0.2s;
 }

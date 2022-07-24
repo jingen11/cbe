@@ -1,21 +1,22 @@
-:root{
+:root {
     --primary-color: rgb(30, 58, 138);
     --primary-color-w500: rgb(59, 130, 246);
-    --primary-color-w300:rgb(147, 197, 253);
-    --primary-color-w300-transparent:rgba(147, 197, 253, 0.4);
+    --primary-color-w300: rgb(147, 197, 253);
+    --primary-color-w300-transparent: rgba(147, 197, 253, 0.4);
+    --error-color: rgb(218, 75, 64);
 }
 
 
-*{
+* {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
     font-size: 10px;
 }
 
-body{
+body {
     font-family: 'Josefin Sans', sans-serif;
-   
+
 }
 
 input:focus,
@@ -25,103 +26,102 @@ button:focus {
     outline: none;
 }
 
-.container{
+.container {
     max-width: 1140px;
     margin: 0 auto;
 }
 
-.flex{
+.flex {
     display: flex;
 }
 
-.flex-vertical{
+.flex-vertical {
     flex-direction: column;
 }
 
-.grid{
+.grid {
     display: grid;
     column-gap: 2.4rem;
 }
 
-.grid.grid-2-cols{
+.grid.grid-2-cols {
     grid-template-columns: repeat(2, 1fr);
 }
 
 
-.grid.grid-3-cols{
+.grid.grid-3-cols {
     grid-template-columns: repeat(3, 1fr);
 }
 
 
-.grid.grid-4-cols{
+.grid.grid-4-cols {
     grid-template-columns: repeat(4, 1fr);
 }
 
-.spacer.spacer-height-sm{
+.spacer.spacer-height-sm {
     height: 0.8rem;
 }
 
-.spacer.spacer-height-md{
+.spacer.spacer-height-md {
     height: 1.6rem;
 }
 
-.spacer.spacer-height-lg{
+.spacer.spacer-height-lg {
     height: 2.4rem;
 }
 
-.spacer.spacer-height-xl{
+.spacer.spacer-height-xl {
     height: 3.2rem;
 }
 
-.italic{
+.italic {
     font-style: italic;
 }
 
-.bold{
+.bold {
     font-weight: 700;
 }
 
-.light{
+.light {
     font-weight: 200;
 }
 
-.semi-bold{
+.semi-bold {
     font-weight: 600;
 }
 
-.header-1{
+.header-1 {
     font-size: 4.8rem;
 }
 
-.header-2{
+.header-2 {
     font-size: 4.0rem;
 }
 
-.header-3{
+.header-3 {
     font-size: 3.2rem;
 }
 
-.header-4{
+.header-4 {
     font-size: 2.8rem;
 }
 
-.header-5{
+.header-5 {
     font-size: 2.4rem;
 }
 
-.header-6{
+.header-6 {
     font-size: 2rem;
 }
 
-.body-text-1{
+.body-text-1 {
     font-size: 1.2rem;
 }
 
-.body-text-2{
+.body-text-2 {
     font-size: 1.6rem;
 }
 
-.primary-color{
- color: var(--primary-color);   
+.primary-color {
+    color: var(--primary-color);
 }
-
