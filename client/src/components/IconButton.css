@@ -1,0 +1,17 @@
+.icon-button {
+    width: 4.8rem;
+    border-radius: 0.4rem;
+    padding: 1.2rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    background-color: transparent;
+}
+
+.icon-button:focus {
+    outline: var(--primary-color-w500) solid 0.6rem;
+}
+
+.icon-button:hover {
+    background-color: var(--primary-color-w500);
+}

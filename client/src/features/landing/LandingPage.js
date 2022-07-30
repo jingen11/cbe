@@ -13,29 +13,27 @@ import User from '../../models/user';
 
 
 class LandingPage extends Component {
-    constructor( props )
-    {
-        super( props );
+    constructor(props) {
+        super(props);
 
-        this.state = 
+        this.state =
         {
             username: "",
             password: "",
             errorText: "",
         };
 
-        this.login = this.login.bind( this );
-        this.usernameOnChange = this.usernameOnChange.bind( this );
-        this.passwordOnChange = this.passwordOnChange.bind( this );
+        this.login = this.login.bind(this);
+        this.usernameOnChange = this.usernameOnChange.bind(this);
+        this.passwordOnChange = this.passwordOnChange.bind(this);
     }
 
-    componentDidUpdate( previousProps, previousState ) 
-    {
-        if( this.props.auth.user instanceof User && this.props.auth.user.username )
-            this.props.navigate( "/home", {replace: true} );
+    componentDidUpdate(previousProps, previousState) {
+        if (this.props.auth.user instanceof User && this.props.auth.user.username)
+            this.props.navigate("/", { replace: true });
 
-        if( previousProps.auth.error !== this.props.auth.error )
-            this.setState( { errorText: this.props.auth.error });
+        if (previousProps.auth.error !== this.props.auth.error)
+            this.setState({ errorText: this.props.auth.error });
     }
 
     usernameOnChange(e) {
@@ -61,29 +59,28 @@ class LandingPage extends Component {
         const hasError = this.state.errorText !== "";
         return (
             <div className="landing-page">
-                <img className="background-img" src="/login.svg" alt="background" />
+                <img className="background-img" src="/assets/login.svg" alt="background" />
                 <div className="container">
                     <div className="page grid">
                         <div className="center flex flex-vertical">
                             <p className="header-1 bold italic primary-color">Cheam Brothers Enterprise</p>
                             <div className="spacer spacer-height-xl" />
-                            <div className="login-card center">
-                                <Card>
-                                    <p className="header-3 bold primary-color">
-                                        Login
-                                    </p>
-                                    <div className="spacer spacer-height-lg" />
-                                    <TextField label="Username" placeholder="Username" fieldName="Username" textOnChanged={this.usernameOnChange} />
-                                    <div className="spacer spacer-height-lg" />
-                                    <TextField label="Password" placeholder="Password" fieldName="Password" type="password" textOnChanged={this.passwordOnChange} />
-                                    <div className="spacer spacer-height-lg" />
-                                    <Button onClick={this.login}>
-                                        <p className="body-text-2 bold">Login</p>
-                                    </Button >
-                                    <div className="spacer spacer-height-sm" />
-                                    <p className={`body-text-1 error-text ${hasError ? "error-text--active" : ""}`}>{hasError ? this.state.errorText : "error placeholder"}</p>
-                                </Card>
-                            </div>
+                            <Card className='login-card center'>
+                                <p className="header-3 bold primary-color">
+                                    Login
+                                </p>
+                                <div className="spacer spacer-height-lg" />
+                                <TextField label="Username" placeholder="Username" fieldName="Username" textOnChanged={this.usernameOnChange} />
+                                <div className="spacer spacer-height-lg" />
+                                <TextField label="Password" placeholder="Password" fieldName="Password" type="password" textOnChanged={this.passwordOnChange} />
+                                <div className="spacer spacer-height-lg" />
+                                <Button onClick={this.login}>
+                                    <p className="body-text-2 bold">Login</p>
+                                </Button >
+                                <div className="spacer spacer-height-sm" />
+                                <p className={`body-text-1 error-text ${hasError ? "error-text--active" : ""}`}>{hasError ? this.state.errorText : "error placeholder"}</p>
+                            </Card>
+
                         </div>
                     </div>
                 </div>
@@ -99,6 +96,6 @@ const mapStateToProps = (state) => ({
 function WithNavigate(props) {
     let navigate = useNavigate();
     return <LandingPage {...props} navigate={navigate} />
-}   
+}
 
 export default connect(mapStateToProps, null)(WithNavigate);

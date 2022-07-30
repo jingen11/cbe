@@ -122,6 +122,24 @@ button:focus {
     font-size: 1.6rem;
 }
 
+.text-center {
+    text-align: center;
+    margin: auto 0;
+}
+
 .primary-color {
     color: var(--primary-color);
+}
+
+.list-row,
+.table-title {
+    display: grid;
+}
+
+.clickable {
+    transition: all 0.2s;
+}
+
+.clickable:hover {
+    background-color: rgba(144, 168, 210, 0.2);
 }

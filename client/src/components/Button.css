@@ -1,4 +1,4 @@
-button{
+.button {
     width: 100%;
     background-color: var(--primary-color);
     color: white;
@@ -11,11 +11,10 @@ button{
     border: 0.2rem solid transparent;
 }
 
-button:hover{
+.button:hover {
     background-color: var(--primary-color-w500);
 }
 
-button:focus{
+.button:focus {
     outline: var(--primary-color-w300-transparent) solid 0.6rem;
-   
 }

@@ -1,32 +1,34 @@
-import React, {useEffect} from 'react';
-import {connect, useDispatch} from 'react-redux';
-import {useNavigate} from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { connect, useDispatch } from 'react-redux';
+import { Outlet, useNavigate } from 'react-router-dom';
 
-import Button from '../../components/Button';
-import { logOut, checkSession } from '../../actions';
+import { checkSession } from '../../actions';
 import User from '../../models/user';
 
-function HomePage(props) {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+import Drawer from './Drawer';
+import './HomePage.css';
 
-    useEffect(() => { 
-        dispatch(checkSession());
-    },[dispatch]);
+function HomePage(props) {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        if( props.auth.user instanceof User && !props.auth.user.username ){
-            navigate( "/" );
+        dispatch(checkSession());
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (props.auth.user instanceof User && !props.auth.user.username) {
+            navigate("/login");
         }
     }, [props.auth, navigate]);
 
-    const _logOut = function(){
-        dispatch(logOut());
-    }
-   
+
     return (
-        <div>
-            <Button onClick={_logOut}> LogOut </Button>
+        <div className='home-page'>
+            <Drawer />
+            <div className='main-content'>
+                <Outlet />
+            </div>
         </div>
     );
 

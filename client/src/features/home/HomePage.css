@@ -1,0 +1,33 @@
+.home-page {
+  position: relative;
+}
+
+.drawer {
+  position: fixed;
+  z-index: 1;
+  width: 7.2rem;
+  height: 100vh;
+  background-color: var(--primary-color);
+  padding: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.drawer .drawer-icons:nth-last-child(2) {
+  flex: 1;
+}
+
+.drawer-svg {
+  color: white;
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
+.main-content {
+  width: 100%;
+  padding-left: 11.2rem;
+  padding-top: 4rem;
+  padding-right: 4rem;
+  padding-bottom: 4rem;
+}
