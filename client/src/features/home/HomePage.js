@@ -12,13 +12,13 @@ function HomePage(props) {
 
     useEffect(() => { 
         dispatch(checkSession());
-    },[]);
+    },[dispatch]);
 
     useEffect(() => {
         if( props.auth.user instanceof User && !props.auth.user.username ){
             navigate( "/" );
         }
-    }, [props.auth]);
+    }, [props.auth, navigate]);
 
     const _logOut = function(){
         dispatch(logOut());

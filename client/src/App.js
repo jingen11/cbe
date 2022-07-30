@@ -13,13 +13,13 @@ function App(props){
 
     useEffect(() => { 
         dispatch(checkSession());
-    },[]);
+    },[dispatch]);
 
     useEffect(()=>{
         if( props.auth.user instanceof User && props.auth.user.username ){
             navigate( "/home" );
         }
-    },[dispatch]);
+    },[props.auth, navigate]);
 
     return (
         <div>
