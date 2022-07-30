@@ -6,6 +6,7 @@ export const Actions = {
     login: "auths/login",
     logout: "auths/logout",
     register: "auths/register",
+    checkSession: "auth/checkSession",
     error: "auths/error",
     removeError: "auths/removeError",
   },

@@ -1,12 +1,6 @@
 import axios from "axios";
 
 const Api = class {
-  checkSession = async function () {
-    const response = await axios.get("/api");
-    if (response.status === 200) return response.data;
-    else throw new Error(response.statusText);
-  };
-
   register = async function (userInfo) {
     let response;
 
@@ -43,8 +37,20 @@ const Api = class {
     } catch (error) {
       throw error;
     }
-
   };
+
+  checkSession = async function(){
+    try {
+      const response = await axios.post("/api/auth/checkSession", {});
+
+      if (response.status === 200) {
+        return response.data;
+      }
+      else throw new Error(response.statusText);
+    } catch (error) {
+      throw error;
+    }
+  }
 
   logout = async function () {
     const response = await axios.get("/api/auth/logout");

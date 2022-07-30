@@ -15,3 +15,26 @@ export const loginUser = (userCredential) => {
     }
   };
 };
+
+export const checkSession = () => {
+  return async (dispatch) => {
+    try {
+      const result = await CbeApi.checkSession();
+      dispatch({ type: Actions.Auths.checkSession, payload: result.user });
+    } catch (error) {
+      dispatch({ type: Actions.Auths.error, payload: error.message });
+    }
+  };
+};
+
+export const logOut = () =>{
+  return async (dispatch) => {
+    try {
+      const result = await CbeApi.logout();
+      dispatch( { type: Actions.Auths.logout, payload: result } );
+    } catch (error) {
+      dispatch({ type: Actions.Auths.error, payload: error.message });
+      
+    }
+  }
+}

@@ -2,6 +2,14 @@ const router = module.exports = require( "express" ).Router();
 
 const User = require('../models/user' );
 
+router.post( "/checkSession", ( req, res ) => 
+{
+    if( Session.byId[req.sessionID] )
+        res.json( { user: Session.byId[req.sessionID].currentUser.toAux() } );
+    else
+        res.json( { user: null } );
+});
+
 router.post( "/login", ( req, res ) => 
 {
     (async () => 

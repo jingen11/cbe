@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import './LandingPage.css';
 
@@ -8,27 +9,33 @@ import TextField from '../../components/TextField';
 import Button from '../../components/Button';
 
 import { loginUser } from '../../actions';
+import User from '../../models/user';
 
 
 class LandingPage extends Component {
-    constructor(props) {
-        super(props);
+    constructor( props )
+    {
+        super( props );
 
-        this.state = {
+        this.state = 
+        {
             username: "",
             password: "",
             errorText: "",
         };
 
-        this.login = this.login.bind(this);
-        this.usernameOnChange = this.usernameOnChange.bind(this);
-        this.passwordOnChange = this.passwordOnChange.bind(this);
+        this.login = this.login.bind( this );
+        this.usernameOnChange = this.usernameOnChange.bind( this );
+        this.passwordOnChange = this.passwordOnChange.bind( this );
     }
 
-    componentDidUpdate(previousProps, previousState) {
-        if (previousProps.auth.error !== this.props.auth.error) {
-            this.setState({ errorText: this.props.auth.error });
-        }
+    componentDidUpdate( previousProps, previousState ) 
+    {
+        if( this.props.auth.user instanceof User && this.props.auth.user.username )
+            this.props.navigate( "/home", {replace: true} );
+
+        if( previousProps.auth.error !== this.props.auth.error )
+            this.setState( { errorText: this.props.auth.error });
     }
 
     usernameOnChange(e) {
@@ -89,4 +96,9 @@ const mapStateToProps = (state) => ({
     auth: state.auth,
 });
 
-export default connect(mapStateToProps, null)(LandingPage);
+function WithNavigate(props) {
+    let navigate = useNavigate();
+    return <LandingPage {...props} navigate={navigate} />
+}   
+
+export default connect(mapStateToProps, null)(WithNavigate);

@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { rootReducer } from './reducers';
 import App from './App';
 import LandingPage from './features/landing/LandingPage';
+import HomePage from './features/home/HomePage';
 import './Global.css';
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
@@ -17,8 +18,8 @@ ReactDOM.render(
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<LandingPage />} />
-          {/* <Route path="/home" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
+          <Route path="/home" element={<HomePage />} />
+         {/*  <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/profile" element={<ProfilePage />} /> */}
         </Route>

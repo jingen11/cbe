@@ -24,8 +24,8 @@ app.use(
     session({
       secret: "cbe@qwoqpncpecwwe390420492304",
       name: "cbe",
-      resave: false,
-      saveUninitialized: false,
+      resave: true,
+      saveUninitialized: true,
       cookie: {
         maxAge: 1000 * 60 * 60 * 24,
       },
