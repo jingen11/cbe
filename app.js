@@ -32,6 +32,8 @@ app.use(
     })
 );
 
+app.use(express.static(__dirname + '/images'));
+
 app.use("/api/auth", authRoute);
 app.use("/api/workers", workerRoute);
 app.use("/api/vehicles", vehicleRoute);

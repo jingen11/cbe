@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
+import {format} from 'date-fns';
 
 import Modal from '../../components/Modal';
 import TextField from '../../components/TextField';
@@ -9,8 +10,7 @@ import Button from '../../components/Button';
 import { addWorker } from '../../actions';
 
 export default function AddWorkerModal(props) {
-  const currentDate = new Date();
-  const dateString = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1 < 10 ? `0${currentDate.getMonth() + 1}` : currentDate.getMonth() + 1}-${currentDate.getDate()}`
+  const dateString = format( new Date(), 'yyyy-MM-dd');
 
   const dispatch = useDispatch();
 
@@ -107,10 +107,9 @@ export default function AddWorkerModal(props) {
       data.append("phoneNumber", phoneNumber);
       data.append("dateJoined", dateJoined);
       data.append("vehicle", vehicle);
-      console.log('fe');
+    
       dispatch(addWorker(data));
     } else {
-      console.log('fe');
       dispatch(addWorker({
         name,
         icNo,
@@ -119,7 +118,10 @@ export default function AddWorkerModal(props) {
         dateJoined,
         vehicle,
       }));
+
     }
+
+    disposeModal();
   }
 
   const disposeModal = function () {

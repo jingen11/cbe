@@ -57,8 +57,6 @@ export const addWorker = (workerDetails) => {
     try {
       const result = await CbeApi.addWorker(workerDetails);
 
-      console.log(result);
-
       dispatch({ type: Actions.Workers.add, payload: result });
     } catch (error) {
       dispatch({ type: Actions.Workers.error, payload: error.message });

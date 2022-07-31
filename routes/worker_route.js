@@ -10,8 +10,8 @@ router.get('/', function (req, res) {
         workers[workerId] = Worker.byId[workerId].toAux();
 
     return res.json({
-        success: true,
-        workers: workers
+        'success': true,
+        'data': workers
     });
 });
 
@@ -33,7 +33,7 @@ router.post('/', upload.single('icImage'), function (req, res) {
             return res.json(
                 {
                     'success': true,
-                    'result': worker.toAux(),
+                    'data': worker.toAux(),
                 });
         } catch (error) {
             return res.json({ error: error.message });

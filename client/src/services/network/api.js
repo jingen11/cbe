@@ -56,7 +56,6 @@ const Api = class {
 
   addWorker = async function (workerDetails) {
     try {
-      console.log(workerDetails);
       const response = await axios.post("/api/workers", workerDetails);
 
       if (response.status === 200) return response.data;

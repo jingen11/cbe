@@ -6,8 +6,8 @@ const workerReducer = (state = { workers: [], error: null }, action) => {
   if (action.type === Actions.Workers.get) {
     const fetchedWorkers = [];
 
-    for (const workerObj in action.payload.workers)
-      fetchedWorkers.push(new Worker(workerObj));
+    for (const workerObj in action.payload.data)
+      fetchedWorkers.push(new Worker(action.payload.data[workerObj]));
 
     return {
       workers: fetchedWorkers,
@@ -15,11 +15,9 @@ const workerReducer = (state = { workers: [], error: null }, action) => {
     };
   }
   if (action.type === Actions.Workers.add) {
-    console.log(action.payload);
-    const fetchedWorkers = [];
+    const fetchedWorkers = state.workers.map((worker)=> worker);
 
-    for (const workerObj in action.payload.workers)
-      fetchedWorkers.push(new Worker(workerObj));
+    fetchedWorkers.push(new Worker(action.payload.data));
 
     return {
       workers: fetchedWorkers,
