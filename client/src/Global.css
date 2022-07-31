@@ -42,6 +42,7 @@ button:focus {
 .grid {
     display: grid;
     column-gap: 2.4rem;
+    width: 100%;
 }
 
 .grid.grid-2-cols {
@@ -142,4 +143,32 @@ button:focus {
 
 .clickable:hover {
     background-color: rgba(144, 168, 210, 0.2);
+}
+
+.svg-icon {
+    color: white;
+    width: 2.4rem;
+    height: 2.4rem;
+}
+
+.svg-icon--black {
+    color: black;
+}
+
+.image-placeholder {
+    background-color: rgba(176, 202, 238, 0.3);
+    border-radius: 0.8rem;
+}
+
+.ReactModal__Overlay {
+    opacity: 0;
+    transition: opacity 200ms ease-in-out;
+}
+
+.ReactModal__Overlay--after-open {
+    opacity: 1;
+}
+
+.ReactModal__Overlay--before-close {
+    opacity: 0;
 }

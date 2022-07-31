@@ -1,0 +1,25 @@
+.modal-background {
+  position: fixed;
+  top: 0;
+  left: 7.2rem;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(29, 37, 78, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal {
+  flex-grow: 1;
+  margin: 4rem auto;
+  padding: 4rem;
+  border-radius: 0.8rem;
+  box-shadow: 0.5rem 0.5rem 2rem var(--primary-color-w300-transparent);
+  background-color: white;
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

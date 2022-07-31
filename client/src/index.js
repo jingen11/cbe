@@ -5,9 +5,10 @@ import { Provider } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { rootReducer } from './reducers';
-import LandingPage from './features/landing/LandingPage';
+import LoginPage from './features/login/LoginPage';
 import HomePage from './features/home/HomePage';
 import WorkerPage from "./features/worker/WorkerPage";
+import VehiclePage from "./features/vehicle/VehiclePage";
 import './Global.css';
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
@@ -18,8 +19,9 @@ ReactDOM.render(
       <Routes>
         <Route path="/" element={<HomePage />}>
           <Route path="/workers" element={<WorkerPage />} />
+          <Route path="/vehicles" element={<VehiclePage />} />
         </Route>
-        <Route path="/login" element={<LandingPage />} />
+        <Route path="/login" element={<LoginPage />} />
       </Routes>
     </BrowserRouter>
   </Provider>,

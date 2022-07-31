@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import './LandingPage.css';
+import './LoginPage.css';
 
 import Card from '../../components/Card';
 import TextField from '../../components/TextField';
@@ -12,7 +12,7 @@ import { loginUser } from '../../actions';
 import User from '../../models/user';
 
 
-class LandingPage extends Component {
+class LoginPage extends Component {
     constructor(props) {
         super(props);
 
@@ -61,7 +61,7 @@ class LandingPage extends Component {
             <div className="landing-page">
                 <img className="background-img" src="/assets/login.svg" alt="background" />
                 <div className="container">
-                    <div className="page grid">
+                    <div className="page">
                         <div className="center flex flex-vertical">
                             <p className="header-1 bold italic primary-color">Cheam Brothers Enterprise</p>
                             <div className="spacer spacer-height-xl" />
@@ -80,7 +80,6 @@ class LandingPage extends Component {
                                 <div className="spacer spacer-height-sm" />
                                 <p className={`body-text-1 error-text ${hasError ? "error-text--active" : ""}`}>{hasError ? this.state.errorText : "error placeholder"}</p>
                             </Card>
-
                         </div>
                     </div>
                 </div>
@@ -95,7 +94,7 @@ const mapStateToProps = (state) => ({
 
 function WithNavigate(props) {
     let navigate = useNavigate();
-    return <LandingPage {...props} navigate={navigate} />
+    return <LoginPage {...props} navigate={navigate} />
 }
 
 export default connect(mapStateToProps, null)(WithNavigate);

@@ -27,14 +27,42 @@ export const checkSession = () => {
   };
 };
 
-export const logOut = () =>{
+export const logOut = () => {
   return async (dispatch) => {
     try {
       const result = await CbeApi.logout();
-      dispatch( { type: Actions.Auths.logout, payload: result } );
+      dispatch({ type: Actions.Auths.logout, payload: result });
     } catch (error) {
       dispatch({ type: Actions.Auths.error, payload: error.message });
-      
+
+    }
+  }
+}
+
+export const getWorkers = () => {
+  return async (dispatch) => {
+    try {
+      const result = await CbeApi.getWorkers();
+
+      dispatch({ type: Actions.Workers.get, payload: result });
+    } catch (error) {
+      dispatch({ type: Actions.Workers.error, payload: error.message });
+
+    }
+  }
+}
+
+export const addWorker = (workerDetails) => {
+  return async (dispatch) => {
+    try {
+      const result = await CbeApi.addWorker(workerDetails);
+
+      console.log(result);
+
+      dispatch({ type: Actions.Workers.add, payload: result });
+    } catch (error) {
+      dispatch({ type: Actions.Workers.error, payload: error.message });
+
     }
   }
 }

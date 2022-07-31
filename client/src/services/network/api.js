@@ -1,24 +1,6 @@
 import axios from "axios";
 
 const Api = class {
-  register = async function (userInfo) {
-    let response;
-
-    if (userInfo instanceof FormData) {
-      response = await axios.post("/api/auth/register", userInfo);
-    } else {
-      response = await axios.post("/api/auth/register", {
-        name: userInfo.name,
-        username: userInfo.username,
-        password: userInfo.password,
-        phoneNumber: userInfo.phoneNumber,
-      });
-    }
-
-    if (response.status === 200) return response.data;
-    else throw new Error(response.statusText);
-  };
-
   login = async function (userCredential) {
     try {
       const response = await axios.post("/api/auth/login", {
@@ -39,7 +21,7 @@ const Api = class {
     }
   };
 
-  checkSession = async function(){
+  checkSession = async function () {
     try {
       const response = await axios.post("/api/auth/checkSession", {});
 
@@ -60,38 +42,30 @@ const Api = class {
     return false;
   };
 
-  getUsersList = async function (userId) {
-    const response = await axios.post("/api/chat/getUsers", {
-      self: userId,
-    });
+  getWorkers = async function () {
+    try {
+      const response = await axios.get("/api/workers");
 
-    if (response.status === 200) {
-      return response.data;
-    } else throw new Error(response.statusText);
-  };
+      if (response.status === 200) return response.data;
 
-  getMessages = async function (userId, receiverId) {
-    const response = await axios.post("/api/chat/getMessages", {
-      self: userId,
-      others: receiverId,
-    });
+      else throw new Error(response.statusText);
+    } catch (error) {
+      throw error;
+    }
+  }
 
-    if (response.status === 200) {
-      return response.data;
-    } else throw new Error(response.statusText);
-  };
+  addWorker = async function (workerDetails) {
+    try {
+      console.log(workerDetails);
+      const response = await axios.post("/api/workers", workerDetails);
 
-  sendMessage = async function (chatObj) {
-    const response = await axios.post("/api/chat/message", {
-      senderId: chatObj.senderId,
-      receiverId: chatObj.receiverId,
-      content: chatObj.content,
-    });
+      if (response.status === 200) return response.data;
 
-    if (response.status === 200) {
-      return response.data;
-    } else throw new Error(response.statusText);
-  };
+      else throw new Error(response.statusText);
+    } catch (error) {
+      throw error;
+    }
+  }
 };
 
 export const CbeApi = Object.freeze(new Api());;
