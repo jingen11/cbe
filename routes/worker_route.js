@@ -16,7 +16,6 @@ router.get('/', function (req, res) {
 });
 
 router.post('/', upload.single('icImage'), function (req, res) {
-    console.log(req.body);
     (async function () {
         try {
             const worker = await Worker.newWorker(
@@ -42,3 +41,6 @@ router.post('/', upload.single('icImage'), function (req, res) {
     })();
 });
 
+router.post('/:workerId', upload.single('icImage'), function( req, res ){
+
+});

@@ -54,8 +54,8 @@ Worker.prototype.update = async function (newProps) {
                 throw error;
         }
 
-        if (workerObj.icImage)
-            fs.writeFileSync(`./images/workers/${modifiedProps.icImagePath}`, workerObj.icImage.buffer);
+        if (newProps.icImage)
+            fs.writeFileSync(`./images/workers/${modifiedProps.icImagePath}`, newProps.icImage.buffer);
     }
 
     this.name = modifiedProps.name;
