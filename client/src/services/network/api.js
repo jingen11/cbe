@@ -65,6 +65,24 @@ const Api = class {
       throw error;
     }
   }
+
+  editWorker = async function (workerDetails) {
+    try {
+      let response;
+
+      if(workerDetails instanceof FormData)
+        response = await axios.patch(`/api/workers/${workerDetails.get('id')}`, workerDetails)
+
+      else
+        response = await axios.patch(`/api/workers/${workerDetails.id}`, workerDetails);
+
+      if (response.status === 200) return response.data;
+
+      else throw new Error(response.statusText);
+    } catch (error) {
+      throw error;
+    }
+  }
 };
 
 export const CbeApi = Object.freeze(new Api());;

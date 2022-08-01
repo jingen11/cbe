@@ -43,8 +43,8 @@ export const getWorkers = () => {
   return async (dispatch) => {
     try {
       const result = await CbeApi.getWorkers();
-
-      dispatch({ type: Actions.Workers.get, payload: result });
+      
+        dispatch({ type: Actions.Workers.get, payload: result });
     } catch (error) {
       dispatch({ type: Actions.Workers.error, payload: error.message });
 
@@ -57,10 +57,29 @@ export const addWorker = (workerDetails) => {
     try {
       const result = await CbeApi.addWorker(workerDetails);
 
-      dispatch({ type: Actions.Workers.add, payload: result });
+      if(!result.error)
+        dispatch({ type: Actions.Workers.add, payload: result });
+
+      else
+        dispatch({ type: Actions.Workers.error, payload: result.error });  
     } catch (error) {
       dispatch({ type: Actions.Workers.error, payload: error.message });
 
+    }
+  }
+}
+
+export const editWorker = (workerDetails) => {
+  return async (dispatch) => {
+    try {
+      const result = await CbeApi.editWorker(workerDetails);
+
+      if(!result.error)
+        dispatch({ type: Actions.Workers.edit, payload: result });
+      else
+        dispatch({ type: Actions.Workers.error, payload: result.error });
+    } catch (error) {
+      dispatch({ type: Actions.Workers.error, payload: error.message });
     }
   }
 }

@@ -11,6 +11,7 @@ export const Actions = {
   Workers: {
     get: "workers/get",
     add: "workers/add",
+    edit: "workers/edit",
     error: "workers/error",
   }
 };

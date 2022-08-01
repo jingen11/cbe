@@ -44,7 +44,7 @@ Worker.prototype.update = async function (newProps) {
 
     await Database.i.db.collection("workers").updateOne({ "_id": Database.i.mongodb.ObjectId(this.id) }, { $set: { ...modifiedProps } });
 
-    if (modifiedProps.icImagePath !== this.icImagePath) {
+    if (modifiedProps.icImagePath !== this.icImagePath && newProps.icImage) {
         try {
             fs.accessSync(`./images/workers/${this.icImagePath}`);
             fs.unlinkSync(`./images/workers/${this.icImagePath}`);
@@ -54,8 +54,7 @@ Worker.prototype.update = async function (newProps) {
                 throw error;
         }
 
-        if (newProps.icImage)
-            fs.writeFileSync(`./images/workers/${modifiedProps.icImagePath}`, newProps.icImage.buffer);
+        fs.writeFileSync(`./images/workers/${modifiedProps.icImagePath}`, newProps.icImage.buffer);
     }
 
     this.name = modifiedProps.name;

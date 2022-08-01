@@ -5,7 +5,7 @@ import Card from '../../components/Card';
 
 export default function WorkerRow(props) {
   return (
-    <Card className="list-row worker-row clickable" onClick={() => console.log('dsdsdd')}>
+    <Card className="list-row worker-row clickable" onClick={() => props.workerOnClick(props.worker)}>
       <div>
         <img className='avatar' src={`/workers/${props.worker.icImagePath}`} alt={props.worker.name} />
       </div>

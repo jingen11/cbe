@@ -1,7 +1,5 @@
 const router = module.exports = require("express").Router();
 
-const User = require('../models/user');
-
 router.post("/checkSession", (req, res) => {
     if (Session.byId[req.sessionID])
         res.json({ user: Session.byId[req.sessionID].currentUser.toAux() });
@@ -12,7 +10,7 @@ router.post("/checkSession", (req, res) => {
 router.post("/login", (req, res) => {
     (async () => {
         try {
-            const user = await User.login(req.body.username, req.body.password);
+            const user = await Model.User.login(req.body.username, req.body.password);
 
             Session.activate(req.sessionID, user);
 
@@ -29,7 +27,7 @@ router.post("/login", (req, res) => {
 router.post("/register", (req, res) => {
     (async () => {
         try {
-            const user = await User.signUp(req.body.username, req.body.password, req.body.confirmPassword);
+            const user = await Model.User.signUp(req.body.username, req.body.password, req.body.confirmPassword);
 
             Session.activate(req.sessionID, user);
 

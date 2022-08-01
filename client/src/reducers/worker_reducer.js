@@ -25,6 +25,27 @@ const workerReducer = (state = { workers: [], error: null }, action) => {
     };
   }
 
+  if (action.type === Actions.Workers.edit) {
+    const fetchedWorkers = state.workers.map((worker)=> worker);
+
+    console.log(action.payload);
+
+    for(const worker of fetchedWorkers)
+      if( worker.id === action.payload.data.id )
+        worker.update( action.payload.data );
+    
+    return {
+      workers: fetchedWorkers,
+      error: null,
+    };
+  }
+
+  if( action.type === Actions.Workers.error){
+    console.log(action.payload);
+
+    return state;
+  }
+
   return state;
 };
 

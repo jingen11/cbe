@@ -7,9 +7,9 @@ import Modal from '../../components/Modal';
 import TextField from '../../components/TextField';
 import Button from '../../components/Button';
 
-import { addWorker } from '../../actions';
+import { addWorker, editWorker } from '../../actions';
 
-export default function AddWorkerModal(props) {
+export default function WorkerModal(props) {
   const dateString = format( new Date(), 'yyyy-MM-dd');
 
   const dispatch = useDispatch();
@@ -23,6 +23,20 @@ export default function AddWorkerModal(props) {
   const [dateJoined, setDateJoined] = useState(dateString);
   const [vehicle, setVehicle] = useState('');
   const [error, setError] = useState('');
+
+
+  const initModal = function(){
+    if(props.workerDetails !== null && props.mode === 1){
+      setImageUrl(`/workers/${props.workerDetails.icImagePath}`);
+      setImageFile(null);
+      setName(props.workerDetails.name);
+      setIcNo(props.workerDetails.icNo);
+      setWage(props.workerDetails.wage);
+      setPhone(props.workerDetails.phoneNumber);
+      setDateJoined(format( new Date(props.workerDetails.dateJoined), 'yyyy-MM-dd'));
+      setVehicle(props.workerDetails.vehicle?props.workerDetails.vehicle:'' );
+    }
+  }
 
   const nameOnChange = function (e) {
     setName(e.target.value);
@@ -108,24 +122,42 @@ export default function AddWorkerModal(props) {
       data.append("dateJoined", dateJoined);
       data.append("vehicle", vehicle);
     
-      dispatch(addWorker(data));
-    } else {
-      dispatch(addWorker({
-        name,
-        icNo,
-        wage,
-        phoneNumber,
-        dateJoined,
-        vehicle,
-      }));
+      if(props.mode === 0)
+        dispatch(addWorker(data));
 
+      else
+      {
+        data.append("id", props.workerDetails.id);
+        dispatch(editWorker(data));
+      }
+    } else {
+      if(props.mode === 0)
+        dispatch(addWorker({
+          name,
+          icNo,
+          wage,
+          phoneNumber,
+          dateJoined,
+          vehicle,
+        }));
+
+      else
+        dispatch(editWorker({
+          id: props.workerDetails.id,
+          name,
+          icNo,
+          wage,
+          phoneNumber,
+          dateJoined,
+          vehicle,
+        }));
     }
 
     disposeModal();
   }
 
   const disposeModal = function () {
-    props.toggleModal(!props.isOpen);
+    props.toggleModal(false);
     setImageUrl('');
     setImageFile(null);
     setName('');
@@ -138,10 +170,10 @@ export default function AddWorkerModal(props) {
   }
 
   return (
-    <Modal isOpen={props.isOpen} closeModal={disposeModal} parent={'#worker-page'}>
+    <Modal isOpen={props.isOpen} closeModal={disposeModal} parent={'#worker-page'} initModal={initModal}>
       <React.Fragment>
         <p className='header-5 primary-color bold'>
-          New Worker
+          {props.mode === 0 ?'New Worker': 'Edit Worker'}
         </p>
         <div className='spacer spacer-height-md' />
         <div className='grid grid-2-cols worker-form'>
@@ -161,18 +193,18 @@ export default function AddWorkerModal(props) {
             )}
 
           </div>
-          <TextField fieldName='name' label='Name' placeholder='Worker name' textOnChanged={nameOnChange} />
-          <TextField fieldName='ic' label='Ic No.' placeholder='960410-07-5565' textOnChanged={icNoOnChange} />
-          <TextField fieldName='wage' label='Wage' placeholder='70' textOnChanged={wageOnChange} />
-          <TextField fieldName='phoneNumber' label='Phone No.' placeholder='012-5138019' textOnChanged={phoneOnChange} />
+          <TextField fieldName='name' label='Name' value={name} placeholder='Worker name' textOnChanged={nameOnChange} />
+          <TextField fieldName='ic' label='Ic No.' value={icNo} placeholder='960410-07-5565' textOnChanged={icNoOnChange} />
+          <TextField fieldName='wage' label='Wage' value={wage} placeholder='70' textOnChanged={wageOnChange} />
+          <TextField fieldName='phoneNumber' label='Phone No.'value={phoneNumber}  placeholder='012-5138019' textOnChanged={phoneOnChange} />
           <TextField fieldName='dateJoined' type='date' value={dateJoined} label='Date Joined' placeholder='10/04/1996' textOnChanged={dateJoinedOnChange} />
-          <TextField fieldName='vehicle' label='Vehicle' placeholder='PLV6874' textOnChanged={vehicleOnChange} />
+          <TextField fieldName='vehicle' label='Vehicle' value={vehicle} placeholder='PLV6874' textOnChanged={vehicleOnChange} />
           <div className='flex flex-vertical'>
             <p className={`body-text-1 error-text ${error ? "error-text--active" : ""}`}>{error ? error : "error placeholder"}</p>
             <div className='spacer spacer-height-sm' />
             <Button className='submit-button' onClick={submitForm}>
               <p className="body-text-2 bold">
-                Submit
+              {props.mode === 0 ?'Submit': 'Edit'}
               </p>
             </Button>
           </div>
@@ -183,7 +215,9 @@ export default function AddWorkerModal(props) {
   )
 }
 
-AddWorkerModal.propTypes = {
+WorkerModal.propTypes = {
   isOpen: PropTypes.bool,
+  mode: PropTypes.number,
   toggleModal: PropTypes.func,
+  workerDetails: PropTypes.object,
 }

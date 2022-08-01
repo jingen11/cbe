@@ -10,11 +10,12 @@ export default function Modal(props) {
       isOpen={props.isOpen}
       contentLabel="New Worker Modal"
       parentSelector={() => document.querySelector(props.parent)}
-      onRequestClose={props.closeModal}
       closeTimeoutMS={200}
       overlayClassName='modal-background'
       className='modal'
       ariaHideApp={false}
+      onRequestClose={props.closeModal}
+      onAfterOpen={props.initModal}
     >
       {props.children}
     </ReactModal>
@@ -25,4 +26,5 @@ Modal.propTypes = {
   isOpen: PropTypes.bool,
   parent: PropTypes.string,
   closeModal: PropTypes.func,
+  initModal: PropTypes.func,
 }

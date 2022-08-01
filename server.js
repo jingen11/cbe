@@ -1,12 +1,11 @@
 require('dotenv').config();
 require('./db');
+require('./models/model');
 require('./session');
 
 const fs = require('fs');
 
 const app = require('./app');
-const Worker = require('./models/worker');
-const Vehicle = require('./models/vehicle');
 
 (async () => {
     try {
@@ -35,11 +34,11 @@ const Vehicle = require('./models/vehicle');
     }
 
     await Database.i.initialise(app);
-    await Vehicle.initialise();
-    await Worker.initialise();
+    await Model.Vehicle.initialise();
+    await Model.Worker.initialise();
     setInterval(() => {
         console.log(Session.byId);
-        console.log(Worker.byId);
+        console.log(Model.Worker.byId);
     }, 5000);
 })();
 
