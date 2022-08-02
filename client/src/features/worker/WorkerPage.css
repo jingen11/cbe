@@ -6,6 +6,11 @@
   height: calc(100vh - 8rem);
 }
 
+
+/*
+  WORKER ROW
+ */
+
 .table-title.worker-table-title {
   padding: 2.4rem 1.6rem;
   grid-template-columns: 1fr 9.6rem 9.6rem 9.6rem 9.6rem;
@@ -34,13 +39,22 @@
   border-radius: 200px;
 }
 
+/*
+  WORKER MODAL
+ */
+
 .worker-form {
   row-gap: 1.6rem;
 }
 
-.worker-form div:last-child {
+.worker-form .form-button:last-child {
   align-self: flex-end;
   grid-column-end: -1;
+}
+
+.worker-form .form-button:nth-last-child(2){
+  align-self: flex-end;
+  grid-column-end: 2;
 }
 
 .worker-form .worker-image-placeholder {

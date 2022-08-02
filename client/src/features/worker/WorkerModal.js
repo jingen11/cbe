@@ -7,7 +7,7 @@ import Modal from '../../components/Modal';
 import TextField from '../../components/TextField';
 import Button from '../../components/Button';
 
-import { addWorker, editWorker } from '../../actions';
+import { addWorker, editWorker, removeWorker } from '../../actions';
 
 export default function WorkerModal(props) {
   const dateString = format( new Date(), 'yyyy-MM-dd');
@@ -156,6 +156,14 @@ export default function WorkerModal(props) {
     disposeModal();
   }
 
+  const deleteWorker = function (e){
+    e.preventDefault();
+
+    dispatch(removeWorker(props.workerDetails.id));
+
+    disposeModal();
+  }
+
   const disposeModal = function () {
     props.toggleModal(false);
     setImageUrl('');
@@ -199,7 +207,7 @@ export default function WorkerModal(props) {
           <TextField fieldName='phoneNumber' label='Phone No.'value={phoneNumber}  placeholder='012-5138019' textOnChanged={phoneOnChange} />
           <TextField fieldName='dateJoined' type='date' value={dateJoined} label='Date Joined' placeholder='10/04/1996' textOnChanged={dateJoinedOnChange} />
           <TextField fieldName='vehicle' label='Vehicle' value={vehicle} placeholder='PLV6874' textOnChanged={vehicleOnChange} />
-          <div className='flex flex-vertical'>
+          <div className='form-button flex flex-vertical'>
             <p className={`body-text-1 error-text ${error ? "error-text--active" : ""}`}>{error ? error : "error placeholder"}</p>
             <div className='spacer spacer-height-sm' />
             <Button className='submit-button' onClick={submitForm}>
@@ -208,7 +216,9 @@ export default function WorkerModal(props) {
               </p>
             </Button>
           </div>
-
+          {props.mode === 1? <Button className="form-button error-button" onClick={deleteWorker}>
+            <p className="body-text-2 bold">Delete</p>
+            </Button>: null}
         </div>
       </React.Fragment>
     </Modal>

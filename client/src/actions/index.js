@@ -83,3 +83,18 @@ export const editWorker = (workerDetails) => {
     }
   }
 }
+
+export const removeWorker = (workerId) => {
+  return async (dispatch) => {
+    try {
+      const result = await CbeApi.removeWorker(workerId);
+
+      if(!result.error)
+        dispatch({ type: Actions.Workers.remove, payload: {...result, workerId} });
+      else
+        dispatch({ type: Actions.Workers.error, payload: result.error });
+    } catch (error) {
+      dispatch({ type: Actions.Workers.error, payload: error.message });
+    }
+  }
+}

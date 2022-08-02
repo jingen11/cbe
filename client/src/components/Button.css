@@ -18,3 +18,11 @@
 .button:focus {
     outline: var(--primary-color-w300-transparent) solid 0.6rem;
 }
+
+.error-button{
+    background-color: var(--error-color);
+}
+
+.error-button:hover{
+    background-color: var(--error-color-transparent);
+}

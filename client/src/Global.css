@@ -4,6 +4,7 @@
     --primary-color-w300: rgb(147, 197, 253);
     --primary-color-w300-transparent: rgba(147, 197, 253, 0.4);
     --error-color: rgb(218, 75, 64);
+    --error-color-transparent: rgba(218, 75, 64,0.6);
 }
 
 

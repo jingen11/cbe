@@ -83,6 +83,18 @@ const Api = class {
       throw error;
     }
   }
+
+  removeWorker = async function (workerId) {
+    try {
+      const response = await axios.delete(`/api/workers/${workerId}`);
+
+      if (response.status === 200) return response.data;
+
+      else throw new Error(response.statusText);
+    } catch (error) {
+      throw error;
+    }
+  }
 };
 
 export const CbeApi = Object.freeze(new Api());;
