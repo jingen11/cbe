@@ -1,5 +1,4 @@
-
-
+const Vehicle = require( './vehicle' );
 export default class Worker {
   id;
   name;
@@ -19,7 +18,7 @@ export default class Worker {
       this.icImagePath = aux.icImagePath ? aux.icImagePath : null;
       this.wage = aux.wage ? aux.wage : null;
       this.dateJoined = aux.dateJoined;
-      this.vehicle = aux.vehicleId;
+      this.vehicle = new Vehicle(aux.vehicle);
     }
   }
 
@@ -32,29 +31,30 @@ export default class Worker {
         wage: this.wage,
         icImagePath: this.icImagePath,
         dateJoined: this.dateJoined,
-         vehicle:'' ,//this.vehicle ? this.vehicle.toAux() : null,
+        vehicle: this.vehicle.toAux(),
         id: this.id
       });
   }
+
+  update(newProps){
+    const modifiedProps = {
+      id: this.id,
+      name: newProps.name ? newProps.name : this.name,
+      phoneNumber: newProps.phoneNumber ? newProps.phoneNumber : this.phoneNumber,
+      icNo: newProps.icNo ? newProps.icNo : this.icNo,
+      icImagePath: newProps.icImagePath ? newProps.icImagePath : this.icImagePath,
+      wage: newProps.wage ? newProps.wage : this.wage,
+      dateJoined: newProps.dateJoined ? newProps.dateJoined : this.dateJoined,
+      vehicle: newProps.vehicle ? new Vehicle( newProps.vehicle ) : this.vehicle
+    };
+  
+    this.name = modifiedProps.name;
+    this.phoneNumber = modifiedProps.phoneNumber;
+    this.icNo = modifiedProps.icNo;
+    this.icImagePath = modifiedProps.icImagePath;
+    this.wage = modifiedProps.wage;
+    this.dateJoined = modifiedProps.dateJoined;
+    this.vehicle = modifiedProps.vehicle;
+  }
 };
 
-Worker.prototype.update = async function (newProps) {
-  const modifiedProps = {
-    id: this.id,
-    name: newProps.name ? newProps.name : this.name,
-    phoneNumber: newProps.phoneNumber ? newProps.phoneNumber : this.phoneNumber,
-    icNo: newProps.icNo ? newProps.icNo : this.icNo,
-    icImagePath: newProps.icImagePath ? newProps.icImagePath : this.icImagePath,
-    wage: newProps.wage ? newProps.wage : this.wage,
-    dateJoined: newProps.dateJoined ? newProps.dateJoined : this.dateJoined,
-    vehicleId: newProps.vehicle ? newProps.vehicle.id : this.vehicleId
-  };
-
-  this.name = modifiedProps.name;
-  this.phoneNumber = modifiedProps.phoneNumber;
-  this.icNo = modifiedProps.icNo;
-  this.icImagePath = modifiedProps.icImagePath;
-  this.wage = modifiedProps.wage;
-  this.dateJoined = modifiedProps.dateJoined;
-  this.vehicle = 'dadadd';
-};

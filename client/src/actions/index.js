@@ -98,3 +98,63 @@ export const removeWorker = (workerId) => {
     }
   }
 }
+
+export const getVehicles = () => {
+  return async (dispatch) => {
+    try {
+      const result = await CbeApi.getVehicles();
+      
+        dispatch({ type: Actions.Vehicles.get, payload: result });
+    } catch (error) {
+      dispatch({ type: Actions.Vehicles.error, payload: error.message });
+
+    }
+  }
+}
+
+export const addVehicle = (vehicleDetails) => {
+  return async (dispatch) => {
+    try {
+      const result = await CbeApi.addVehicle(vehicleDetails);
+
+      if(!result.error)
+        dispatch({ type: Actions.Vehicles.add, payload: result });
+
+      else
+        dispatch({ type: Actions.Vehicles.error, payload: result.error });  
+    } catch (error) {
+      dispatch({ type: Actions.Vehicles.error, payload: error.message });
+
+    }
+  }
+}
+
+export const editVehicle = (vehicleDetails) => {
+  return async (dispatch) => {
+    try {
+      const result = await CbeApi.editVehicle(vehicleDetails);
+
+      if(!result.error)
+        dispatch({ type: Actions.Vehicles.edit, payload: result });
+      else
+        dispatch({ type: Actions.Vehicles.error, payload: result.error });
+    } catch (error) {
+      dispatch({ type: Actions.Vehicles.error, payload: error.message });
+    }
+  }
+}
+
+export const removeVehicle = (vehicleId) => {
+  return async (dispatch) => {
+    try {
+      const result = await CbeApi.removeVehicle(vehicleId);
+
+      if(!result.error)
+        dispatch({ type: Actions.Vehicles.remove, payload: {...result, vehicleId} });
+      else
+        dispatch({ type: Actions.Vehicles.error, payload: result.error });
+    } catch (error) {
+      dispatch({ type: Actions.Vehicles.error, payload: error.message });
+    }
+  }
+}

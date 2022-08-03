@@ -31,7 +31,7 @@ router.post('/', upload.single('icImage'), function (req, res) {
             return res.json(
                 {
                     'success': true,
-                    'data': worker.toAux(),
+                    'data': worker.toAux()
                 });
         } catch (error) {
             return res.json({ error: error.message });
@@ -57,7 +57,7 @@ router.patch('/:workerId', upload.single('icImage'), function( req, res ){
             return res.json(
                 {
                     'success': true,
-                    'data': worker.toAux(),
+                    'data': worker.toAux()
                 });
         } catch (error) {
             return res.json({ error: error.message });

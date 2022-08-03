@@ -1,5 +1,5 @@
 const fs = require('fs');
-const Vehicle = require('./vehicle');
+
 const Worker = module.exports = function (aux) {
     this.id = aux._id.toString();
     this.name = aux.name;
@@ -8,7 +8,7 @@ const Worker = module.exports = function (aux) {
     this.icImagePath = aux.icImagePath ? aux.icImagePath : null;
     this.wage = aux.wage ? aux.wage : null;
     this.dateJoined = aux.dateJoined;
-    this.vehicle = aux.vehicleId ? Vehicle.byId[aux.vehicleId] : null;
+    this.vehicle = aux.vehicleId ? Model.Vehicle.byId[aux.vehicleId] : null;
 };
 
 Worker.prototype.toAux = function () {
@@ -63,7 +63,7 @@ Worker.prototype.update = async function (newProps) {
     this.icImagePath = modifiedProps.icImagePath;
     this.wage = modifiedProps.wage;
     this.dateJoined = modifiedProps.dateJoined;
-    this.vehicle = Vehicle.byId[modifiedProps.vehicleId];
+    this.vehicle = Modal.Vehicle.byId[modifiedProps.vehicleId];
 };
 
 Worker.initialise = async function () {

@@ -29,8 +29,7 @@ Vehicle.prototype.update = async function( newProps )
         roadTaxExpDate: newProps.roadTaxExpDate ? newProps.roadTaxExpDate : this.roadTaxExpDate,
         puspakomExpDate: newProps.puspakomExpDate ? newProps.puspakomExpDate : this.puspakomExpDate,
         petrolCardNum: newProps.petrolCardNum ? newProps.petrolCardNum : this.petrolCardNum,
-        touchNGoCardNum: newProps.touchNGoCardNum ? newProps.touchNGoCardNum : this.touchNGoCardNum,
-        active: newProps.active !== null ? newProps : this.active
+        touchNGoCardNum: newProps.touchNGoCardNum ? newProps.touchNGoCardNum : this.touchNGoCardNum
     };
 
     await Database.i.db.collection( "vehicles" ).updateOne( { "_id": Database.i.mongodb.ObjectId( this.id ) }, { $set : { ...modifiedProps } } );
@@ -40,7 +39,11 @@ Vehicle.prototype.update = async function( newProps )
     this.puspakomExpDate = modifiedProps.puspakomExpDate;
     this.petrolCardNum = modifiedProps.petrolCardNum;
     this.touchNGoCardNum = modifiedProps.touchNGoCardNum;
-    this.active = modifiedProps.active;
+};
+Vehicle.prototype.delete = async function () {
+    await Database.i.db.collection( "vehicles" ).updateOne( { _id: Database.i.mongodb.ObjectId( this.id ) }, { $set : { active: false } } );
+
+    this.active = false;
 };
 
 Vehicle.initialise = async function()

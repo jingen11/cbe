@@ -95,6 +95,54 @@ const Api = class {
       throw error;
     }
   }
+
+  getVehicles = async function () {
+    try {
+      const response = await axios.get("/api/vehicles");
+
+      if (response.status === 200) return response.data;
+
+      else throw new Error(response.statusText);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  addVehicle = async function (vehicleDetails) {
+    try {
+      const response = await axios.post("/api/vehicles", vehicleDetails);
+
+      if (response.status === 200) return response.data;
+
+      else throw new Error(response.statusText);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  editVehicle = async function (vehicleDetails) {
+    try {
+      const response = await axios.patch(`/api/vehicles/${vehicleDetails.id}`, vehicleDetails);
+
+      if (response.status === 200) return response.data;
+
+      else throw new Error(response.statusText);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  removeVehicle = async function (vehicleId) {
+    try {
+      const response = await axios.delete(`/api/vehicles/${vehicleId}`);
+
+      if (response.status === 200) return response.data;
+
+      else throw new Error(response.statusText);
+    } catch (error) {
+      throw error;
+    }
+  }
 };
 
 export const CbeApi = Object.freeze(new Api());;
