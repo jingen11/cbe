@@ -9,7 +9,7 @@ export default class Vehicle {
   
     constructor(aux) {
         if (aux) {    
-            this.id = aux._id.toString();
+            this.id = aux.id;
             this.registrationNum = aux.registrationNum;
             this.roadTaxExpDate = aux.roadTaxExpDate ? aux.roadTaxExpDate : null;
             this.puspakomExpDate = aux.puspakomExpDate ? aux.puspakomExpDate : null;

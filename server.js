@@ -55,6 +55,7 @@ const app = require('./app');
     setInterval(() => {
         console.log(Session.byId);
         console.log(Model.Worker.byId);
+        console.log(Model.Vehicle.byId);
     }, 5000);
 })();
 

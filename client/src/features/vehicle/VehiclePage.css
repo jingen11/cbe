@@ -1,0 +1,50 @@
+.vehicle-page {
+    position: relative;
+  }
+  
+  .minus-padding {
+    height: calc(100vh - 8rem);
+  }
+  
+  /*
+    VEHICLE ROW
+   */
+  
+  .table-title.vehicle-table-title {
+    padding: 2.4rem 1.6rem;
+    grid-template-columns: repeat(5, 1fr);
+    column-gap: 4.8rem;
+  }
+  
+  .table-title.vehicle-table-title p:not(:first-child) {
+    justify-self: center;
+  }
+  
+  .list-row.vehicle-row {
+    padding: 0.8rem 1.6rem;
+    grid-template-columns: repeat(5, 1fr);
+    column-gap: 4.8rem;
+    margin-bottom: 1.6rem;
+  }
+  
+  /* .list-row.vehicle-row div:not(:nth-child(2)) {
+    justify-self: center;
+  } */
+  
+  /*
+    WORKER MODAL
+   */
+  
+  .vehicle-form {
+    row-gap: 1.6rem;
+  }
+  
+  .vehicle-form .form-button:last-child {
+    align-self: flex-end;
+    grid-column-end: -1;
+  }
+  
+  .vehicle-form .form-button:nth-last-child(2){
+    align-self: flex-end;
+    grid-column-end: 2;
+  }

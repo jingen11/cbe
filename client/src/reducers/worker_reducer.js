@@ -53,7 +53,7 @@ const workerReducer = (state = { workers: [], error: null }, action) => {
     };
   }
 
-  if( action.type === Actions.Workers.error){
+  if(action.type === Actions.Workers.error){
     console.log(action.payload);
 
     return state;

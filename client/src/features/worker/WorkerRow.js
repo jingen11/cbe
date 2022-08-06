@@ -20,7 +20,7 @@ export default function WorkerRow(props) {
         <p className='body-text-2 light'>{props.worker.phoneNumber}</p>
       </div>
       <div>
-        <p className='body-text-2 light'>{format(props.worker.dateJoined? new Date(props.worker.dateJoined): Date.now(), 'dd/MM/yyyy')}</p>
+        <p className='body-text-2 light'>{format(new Date(props.worker.dateJoined), 'dd/MM/yyyy')}</p>
       </div>
       <div>
         <p className='body-text-2 light'>{props.worker.vehicle}</p>

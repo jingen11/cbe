@@ -4,47 +4,47 @@ import { connect, useDispatch } from 'react-redux';
 import VehicleRow from './VehicleRow';
 import FloatingActionButton from '../../components/FloatingActionButton';
 import EmptyPage from '../../components/EmptyPage';
-import VehicleModal from './WorkerModal';
+import VehicleModal from './VehicleModal';
 
-import { getWorkers } from '../../actions';
+import { getVehicles } from '../../actions';
 
-import './WorkerPage.css';
+import './VehiclePage.css';
 
-function WorkerPage(props) {
+function VehiclePage(props) {
   const [isOpen, toggleModal] = useState(false);
-  const [selectedWorker, setWorker] = useState(null);
+  const [selectedVehicle, setVehicle] = useState(null);
   const [mode, setMode] = useState(0);
 
   const dispatch = useDispatch();
 
-  useEffect(() => { dispatch(getWorkers()) }, [dispatch]);
+  useEffect(() => { dispatch(getVehicles()) }, [dispatch]);
 
-  const workerOnClick = function(worker){
-    setWorker(worker);
+  const vehicleOnClick = function(vehicle){
+    setVehicle(vehicle);
     toggleModal(true);
     setMode(1);
   }
 
   return (
-    <div className='worker-page' id='worker-page'>
+    <div className='vehicle-page' id='vehicle-page'>
       <div className='container'>
-        {props.workers.workers.length > 0 ?
+        {props.vehicles.vehicles.length > 0 ?
           (<React.Fragment>
-            <p className='header-5 primary-color bold'>Workers</p>
+            <p className='header-5 primary-color bold'>Vehicles</p>
             <div className='spacer spacer-height-lg' />
-            <div className='table-title worker-table-title'>
-              <p className='header-6'>Name</p>
-              <p className='header-6 text-center'>Wage</p>
-              <p className='header-6 text-center'>Phone</p>
-              <p className='header-6 text-center'>Date Joined</p>
-              <p className='header-6 text-center'>Vehicle</p>
+            <div className='table-title vehicle-table-title'>
+              <p className='header-6'>Plat Number</p>
+              <p className='header-6 text-center'>Road Tax Exp Date</p>
+              <p className='header-6 text-center'>Puspakom Exp Date</p>
+              <p className='header-6 text-center'>Petrol Card Number</p>
+              <p className='header-6 text-center'>TouchNGo Card Number</p>
             </div>
-            {props.workers.workers.map((worker, index) => {
-              return <WorkerRow key={index} worker={worker} workerOnClick={workerOnClick}/>
+            {props.vehicles.vehicles.map((vehicle, index) => {
+              return <VehicleRow key={index} vehicle={vehicle} vehicleOnClick={vehicleOnClick}/>
             })}
-          </React.Fragment>) : <EmptyPage className="minus-padding" description={'No workers found...'} />}
+          </React.Fragment>) : <EmptyPage className="minus-padding" description={'No vehicles found...'} />}
       </div>
-      <WorkerModal isOpen={isOpen} toggleModal={(isOpen) => toggleModal(isOpen)} workerDetails={selectedWorker? selectedWorker.toAux(): null} mode={mode}/>
+      <VehicleModal isOpen={isOpen} toggleModal={(isOpen) => toggleModal(isOpen)} vehicleDetails={selectedVehicle? selectedVehicle.toAux(): null} mode={mode}/>
       <FloatingActionButton onClick={()=> {toggleModal(true); setMode(0);} }>
         <svg xmlns="http://www.w3.org/2000/svg" className='svg-icon' aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
           <rect x="0" y="0" width="24" height="24" fill="none" stroke="none" />
@@ -57,7 +57,7 @@ function WorkerPage(props) {
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  workers: state.workers,
+  vehicles: state.vehicles,
 });
 
-export default connect(mapStateToProps, null)(WorkerPage);
+export default connect(mapStateToProps, null)(VehiclePage);

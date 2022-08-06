@@ -47,7 +47,6 @@ export const getWorkers = () => {
         dispatch({ type: Actions.Workers.get, payload: result });
     } catch (error) {
       dispatch({ type: Actions.Workers.error, payload: error.message });
-
     }
   }
 }

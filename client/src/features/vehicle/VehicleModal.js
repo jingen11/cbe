@@ -7,151 +7,101 @@ import Modal from '../../components/Modal';
 import TextField from '../../components/TextField';
 import Button from '../../components/Button';
 
-import { addWorker, editWorker, removeWorker } from '../../actions';
+import { addVehicle, editVehicle, removeVehicle } from '../../actions';
 
 export default function VehicleModal(props) {
   const dateString = format( new Date(), 'yyyy-MM-dd');
 
   const dispatch = useDispatch();
 
-  const [imageUrl, setImageUrl] = useState('');
-  const [imageFile, setImageFile] = useState(null);
-  const [name, setName] = useState('');
-  const [icNo, setIcNo] = useState('');
-  const [wage, setWage] = useState('');
-  const [phoneNumber, setPhone] = useState('');
-  const [dateJoined, setDateJoined] = useState(dateString);
-  const [vehicle, setVehicle] = useState('');
+  const [platNum, setPlatNum] = useState('');
+  const [roadTaxExpDate, setRoadTaxExpDate] = useState(dateString);
+  const [puspakomExpDate, setPuspakomExpDate] = useState(dateString);
+  const [petrolCardNum, setPetrolCardNum] = useState('');
+  const [touchNGoCardNum, setTouchNGoCardNum] = useState('');
   const [error, setError] = useState('');
 
 
   const initModal = function(){
-    if(props.workerDetails !== null && props.mode === 1){
-      setImageUrl(`/workers/${props.workerDetails.icImagePath}`);
-      setImageFile(null);
-      setName(props.workerDetails.name);
-      setIcNo(props.workerDetails.icNo);
-      setWage(props.workerDetails.wage);
-      setPhone(props.workerDetails.phoneNumber);
-      setDateJoined(format( new Date(props.workerDetails.dateJoined), 'yyyy-MM-dd'));
-      setVehicle(props.workerDetails.vehicle?props.workerDetails.vehicle:'' );
+    if(props.vehicleDetails !== null && props.mode === 1){
+      setPlatNum(props.vehicleDetails.registrationNum);
+      setRoadTaxExpDate(format( new Date(props.vehicleDetails.roadTaxExpDate), 'yyyy-MM-dd'));
+      setPuspakomExpDate(format( new Date(props.vehicleDetails.puspakomExpDate), 'yyyy-MM-dd'));
+      setPetrolCardNum(props.vehicleDetails.petrolCardNum);
+      setTouchNGoCardNum(props.vehicleDetails.touchNGoCardNum);
     }
   }
 
-  const nameOnChange = function (e) {
-    setName(e.target.value);
+  const platNumOnChange = function (e) {
+    setPlatNum(e.target.value);
   }
 
-  const icNoOnChange = function (e) {
-    setIcNo(e.target.value);
+  const roadTaxExpDateOnChange = function (e){
+    setRoadTaxExpDate(e.target.value);
   }
 
-  const wageOnChange = function (e) {
-    setWage(e.target.value);
+  const puspakomExpDateOnChange = function (e){
+    setPuspakomExpDate(e.target.value);
   }
 
-  const phoneOnChange = function (e) {
-    setPhone(e.target.value);
+  const petrolCardNumOnChange = function (e) {
+    setPetrolCardNum(e.target.value);
   }
 
-  const dateJoinedOnChange = function (e) {
-    setDateJoined(e.target.value);
+  const tounchNGoCardOnChange = function (e) {
+    setTouchNGoCardNum(e.target.value);
   }
 
-  const vehicleOnChange = function (e) {
-    setVehicle(e.target.value);
-  }
-
-  const openFileSelector = function () {
-    document.getElementById('worker_ic').click();
-  };
-
-  const imageOnSelected = function (e) {
-    if (e.target.files.length > 0) {
-      const reader = new FileReader();
-
-      reader.readAsDataURL(e.target.files[0]);
-
-      reader.onload = function (eve) {
-        setImageUrl(eve.target.result);
-        setImageFile(e.target.files[0]);
-
-      };
-    } else {
-      setImageUrl('');
-      setImageFile(null);
-    }
-  }
 
   const submitForm = function (e) {
     e.preventDefault();
 
-    if (name.trim() === '') {
+    if (platNum.trim() === '') {
       setError('name cannot be empty');
       return;
     }
-    else if (icNo.trim() === '') {
-      setError('ic number cannot be empty');
+    
+    else if (roadTaxExpDate.trim() === '') {
+      setError('road tax expire date cannot be empty');
       return;
     }
 
-    else if (wage.trim() === '') {
-      setError('wage cannot be empty');
+    else if (puspakomExpDate.trim() === '') {
+      setError('puspakom expire date cannot be empty');
       return;
     }
 
-    else if (dateJoined.trim() === '') {
-      setError('date joined cannot be empty');
+    else if (petrolCardNum.trim() === '') {
+      setError('petrol card number cannot be empty');
       return;
     }
 
-    else if (vehicle.trim() === '') {
-      setError('vehicle cannot be empty');
+    else if (touchNGoCardNum.trim() === '') {
+      setError('name cannot be empty');
       return;
     }
 
     setError('');
 
-    if (imageFile) {
-      let data = new FormData();
-      data.append("icImage", imageFile);
-      data.append("name", name);
-      data.append("icNo", icNo);
-      data.append("wage", wage);
-      data.append("phoneNumber", phoneNumber);
-      data.append("dateJoined", dateJoined);
-      data.append("vehicle", vehicle);
+    if(props.mode === 0)
+      dispatch(addVehicle({
+        registrationNum: platNum,
+        roadTaxExpDate,
+        puspakomExpDate,
+        petrolCardNum,
+        touchNGoCardNum
+      }));
+
+    else
+      dispatch(editVehicle({
+        id: props.vehicleDetails.id,
+        registrationNum: platNum,
+        roadTaxExpDate,
+        puspakomExpDate,
+        petrolCardNum,
+        touchNGoCardNum
+      }));
     
-      if(props.mode === 0)
-        dispatch(addWorker(data));
-
-      else
-      {
-        data.append("id", props.workerDetails.id);
-        dispatch(editWorker(data));
-      }
-    } else {
-      if(props.mode === 0)
-        dispatch(addWorker({
-          name,
-          icNo,
-          wage,
-          phoneNumber,
-          dateJoined,
-          vehicle,
-        }));
-
-      else
-        dispatch(editWorker({
-          id: props.workerDetails.id,
-          name,
-          icNo,
-          wage,
-          phoneNumber,
-          dateJoined,
-          vehicle,
-        }));
-    }
 
     disposeModal();
   }
@@ -159,54 +109,35 @@ export default function VehicleModal(props) {
   const deleteWorker = function (e){
     e.preventDefault();
 
-    dispatch(removeWorker(props.workerDetails.id));
+    dispatch(removeVehicle(props.vehicleDetails.id));
 
     disposeModal();
   }
 
   const disposeModal = function () {
     props.toggleModal(false);
-    setImageUrl('');
-    setImageFile(null);
-    setName('');
-    setIcNo('');
-    setWage('');
-    setPhone('');
-    setDateJoined(dateString);
-    setVehicle('');
+    
+    setPlatNum('');
+    setRoadTaxExpDate(dateString);
+    setPuspakomExpDate(dateString);
+    setTouchNGoCardNum('');
+    setPetrolCardNum('');
     setError('');
   }
 
   return (
-    <Modal isOpen={props.isOpen} closeModal={disposeModal} parent={'#worker-page'} initModal={initModal}>
+    <Modal isOpen={props.isOpen} closeModal={disposeModal} parent={'#vehicle-page'} initModal={initModal}>
       <React.Fragment>
         <p className='header-5 primary-color bold'>
-          {props.mode === 0 ?'New Worker': 'Edit Worker'}
+          {props.mode === 0 ?'New Vehicle': 'Edit Vehicle'}
         </p>
         <div className='spacer spacer-height-md' />
-        <div className='grid grid-2-cols worker-form'>
-          <div className='image-placeholder worker-image-placeholder clickable' onClick={openFileSelector}>
-            <input type='file' id='worker_ic' name='workerIc' accept="image/*" onChange={imageOnSelected} hidden />
-            {imageUrl ? (
-              <img
-                className="worker-image"
-                src={imageUrl}
-                alt="profile-pic"
-              />
-            ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" className='svg-icon svg-icon--black' aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
-                <rect x="0" y="0" width="24" height="24" fill="none" stroke="none" />
-                <path fill="currentColor" d="M20 20H4a1.943 1.943 0 0 1-2-1.876V5.875A1.942 1.942 0 0 1 4 4h16a1.942 1.942 0 0 1 2 1.875v12.25A1.943 1.943 0 0 1 20 20ZM4 6v11.989L20 18V6.011L4 6Zm9.43 10H6a3.21 3.21 0 0 1 1.093-2.14a3.829 3.829 0 0 1 2.622-1.11c.984.02 1.923.417 2.622 1.11A3.212 3.212 0 0 1 13.43 16ZM18 15h-3v-2h3v2Zm-8.285-3a1.934 1.934 0 0 1-2-2a1.935 1.935 0 0 1 2-2a1.935 1.935 0 0 1 2 2a1.934 1.934 0 0 1-2 2ZM18 11h-4V9h4v2Z" />
-              </svg>
-            )}
-
-          </div>
-          <TextField fieldName='name' label='Name' value={name} placeholder='Worker name' textOnChanged={nameOnChange} />
-          <TextField fieldName='ic' label='Ic No.' value={icNo} placeholder='960410-07-5565' textOnChanged={icNoOnChange} />
-          <TextField fieldName='wage' label='Wage' value={wage} placeholder='70' textOnChanged={wageOnChange} />
-          <TextField fieldName='phoneNumber' label='Phone No.'value={phoneNumber}  placeholder='012-5138019' textOnChanged={phoneOnChange} />
-          <TextField fieldName='dateJoined' type='date' value={dateJoined} label='Date Joined' placeholder='10/04/1996' textOnChanged={dateJoinedOnChange} />
-          <TextField fieldName='vehicle' label='Vehicle' value={vehicle} placeholder='PLV6874' textOnChanged={vehicleOnChange} />
+        <div className='grid grid-2-cols vehicle-form'>
+          <TextField fieldName='platNum' label='Plat Number' value={platNum} placeholder='Plat number' textOnChanged={platNumOnChange} />
+          <TextField fieldName='roadTaxExpDate' type='date' label='Road Tax Exp Date' value={roadTaxExpDate} placeholder='01/07/2022' textOnChanged={roadTaxExpDateOnChange} />
+          <TextField fieldName='puspakomExpDate' type='date' label='Puspakom Exp Date' value={puspakomExpDate} placeholder='01/07/2022' textOnChanged={puspakomExpDateOnChange} />
+          <TextField fieldName='petrolCardNum' label='Petrol Card Number' value={petrolCardNum} placeholder='1234567' textOnChanged={petrolCardNumOnChange} />
+          <TextField fieldName='touchNGoCardNum' label='Touch N Go Card Number'value={touchNGoCardNum}  placeholder='1234567' textOnChanged={tounchNGoCardOnChange} />
           <div className='form-button flex flex-vertical'>
             <p className={`body-text-1 error-text ${error ? "error-text--active" : ""}`}>{error ? error : "error placeholder"}</p>
             <div className='spacer spacer-height-sm' />
@@ -225,9 +156,9 @@ export default function VehicleModal(props) {
   )
 }
 
-WorkerModal.propTypes = {
+VehicleModal.propTypes = {
   isOpen: PropTypes.bool,
   mode: PropTypes.number,
   toggleModal: PropTypes.func,
-  workerDetails: PropTypes.object,
+  vehicleDetails: PropTypes.object,
 }

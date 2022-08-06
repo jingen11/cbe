@@ -1,4 +1,4 @@
-const Vehicle = require( './vehicle' );
+import Vehicle from './vehicle';
 export default class Worker {
   id;
   name;
@@ -18,7 +18,7 @@ export default class Worker {
       this.icImagePath = aux.icImagePath ? aux.icImagePath : null;
       this.wage = aux.wage ? aux.wage : null;
       this.dateJoined = aux.dateJoined;
-      this.vehicle = new Vehicle(aux.vehicle);
+      this.vehicle = aux.vehicle ? new Vehicle(aux.vehicle) : null;
     }
   }
 
@@ -31,7 +31,7 @@ export default class Worker {
         wage: this.wage,
         icImagePath: this.icImagePath,
         dateJoined: this.dateJoined,
-        vehicle: this.vehicle.toAux(),
+        vehicle: this.vehicle ? this.vehicle.toAux() : null,
         id: this.id
       });
   }
