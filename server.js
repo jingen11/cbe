@@ -53,7 +53,7 @@ const app = require('./app');
     await Model.Vehicle.initialise();
     await Model.Worker.initialise();
     setInterval(() => {
-        console.log(Session.byId);
+   
         console.log(Model.Worker.byId);
         console.log(Model.Vehicle.byId);
     }, 5000);
