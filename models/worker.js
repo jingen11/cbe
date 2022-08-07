@@ -65,6 +65,23 @@ Worker.prototype.update = async function (newProps) {
     this.dateJoined = modifiedProps.dateJoined;
     this.vehicle = modifiedProps.vehicleId ? Model.Vehicle.byId[modifiedProps.vehicleId] : null;
 };
+Worker.prototype.attend = async function (date, vehicle) {
+    if (!date) {
+        throw new error('please provide attendance date');
+    }
+
+    const assignedVehicle = vehicle ? Model.Vehicle.byId[vehicle] : null;
+
+    const data = {
+        date: date,
+        user: this,
+        vehicle: assignedVehicle
+    }
+
+    const attendance = await Model.Attendance.addAttendance(data);
+
+    return attendance;
+}
 
 Worker.initialise = async function () {
     await Database.i.db.collection("workers").find().forEach((worker) => {
