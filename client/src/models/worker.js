@@ -36,7 +36,7 @@ export default class Worker {
       });
   }
 
-  update(newProps){
+  update(newProps) {
     const modifiedProps = {
       id: this.id,
       name: newProps.name ? newProps.name : this.name,
@@ -45,9 +45,9 @@ export default class Worker {
       icImagePath: newProps.icImagePath ? newProps.icImagePath : this.icImagePath,
       wage: newProps.wage ? newProps.wage : this.wage,
       dateJoined: newProps.dateJoined ? newProps.dateJoined : this.dateJoined,
-      vehicle: newProps.vehicle ? new Vehicle( newProps.vehicle ) : this.vehicle
+      vehicle: newProps.vehicle ? new Vehicle(newProps.vehicle) : this.vehicle
     };
-  
+
     this.name = modifiedProps.name;
     this.phoneNumber = modifiedProps.phoneNumber;
     this.icNo = modifiedProps.icNo;

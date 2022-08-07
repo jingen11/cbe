@@ -27,6 +27,10 @@ export const checkSession = () => {
   };
 };
 
+export const clearMemory = () => {
+  return { type: Actions.Auths.clearMemory, payload: null };
+}
+
 export const logOut = () => {
   return async (dispatch) => {
     try {
@@ -43,8 +47,8 @@ export const getWorkers = () => {
   return async (dispatch) => {
     try {
       const result = await CbeApi.getWorkers();
-      
-        dispatch({ type: Actions.Workers.get, payload: result });
+
+      dispatch({ type: Actions.Workers.get, payload: result });
     } catch (error) {
       dispatch({ type: Actions.Workers.error, payload: error.message });
     }
@@ -56,11 +60,11 @@ export const addWorker = (workerDetails) => {
     try {
       const result = await CbeApi.addWorker(workerDetails);
 
-      if(!result.error)
+      if (!result.error)
         dispatch({ type: Actions.Workers.add, payload: result });
 
       else
-        dispatch({ type: Actions.Workers.error, payload: result.error });  
+        dispatch({ type: Actions.Workers.error, payload: result.error });
     } catch (error) {
       dispatch({ type: Actions.Workers.error, payload: error.message });
 
@@ -73,7 +77,7 @@ export const editWorker = (workerDetails) => {
     try {
       const result = await CbeApi.editWorker(workerDetails);
 
-      if(!result.error)
+      if (!result.error)
         dispatch({ type: Actions.Workers.edit, payload: result });
       else
         dispatch({ type: Actions.Workers.error, payload: result.error });
@@ -88,8 +92,8 @@ export const removeWorker = (workerId) => {
     try {
       const result = await CbeApi.removeWorker(workerId);
 
-      if(!result.error)
-        dispatch({ type: Actions.Workers.remove, payload: {...result, workerId} });
+      if (!result.error)
+        dispatch({ type: Actions.Workers.remove, payload: { ...result, workerId } });
       else
         dispatch({ type: Actions.Workers.error, payload: result.error });
     } catch (error) {
@@ -102,8 +106,8 @@ export const getVehicles = () => {
   return async (dispatch) => {
     try {
       const result = await CbeApi.getVehicles();
-      
-        dispatch({ type: Actions.Vehicles.get, payload: result });
+
+      dispatch({ type: Actions.Vehicles.get, payload: result });
     } catch (error) {
       dispatch({ type: Actions.Vehicles.error, payload: error.message });
 
@@ -116,11 +120,11 @@ export const addVehicle = (vehicleDetails) => {
     try {
       const result = await CbeApi.addVehicle(vehicleDetails);
 
-      if(!result.error)
+      if (!result.error)
         dispatch({ type: Actions.Vehicles.add, payload: result });
 
       else
-        dispatch({ type: Actions.Vehicles.error, payload: result.error });  
+        dispatch({ type: Actions.Vehicles.error, payload: result.error });
     } catch (error) {
       dispatch({ type: Actions.Vehicles.error, payload: error.message });
 
@@ -133,7 +137,7 @@ export const editVehicle = (vehicleDetails) => {
     try {
       const result = await CbeApi.editVehicle(vehicleDetails);
 
-      if(!result.error)
+      if (!result.error)
         dispatch({ type: Actions.Vehicles.edit, payload: result });
       else
         dispatch({ type: Actions.Vehicles.error, payload: result.error });
@@ -148,8 +152,8 @@ export const removeVehicle = (vehicleId) => {
     try {
       const result = await CbeApi.removeVehicle(vehicleId);
 
-      if(!result.error)
-        dispatch({ type: Actions.Vehicles.remove, payload: {...result, vehicleId} });
+      if (!result.error)
+        dispatch({ type: Actions.Vehicles.remove, payload: { ...result, vehicleId } });
       else
         dispatch({ type: Actions.Vehicles.error, payload: result.error });
     } catch (error) {
