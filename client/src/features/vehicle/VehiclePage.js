@@ -33,7 +33,7 @@ function VehiclePage(props) {
             <p className='header-5 primary-color bold'>Vehicles</p>
             <div className='spacer spacer-height-lg' />
             <div className='table-title vehicle-table-title'>
-              <p className='header-6'>Plat Number</p>
+              <p className='header-6 text-center'>Plat Number</p>
               <p className='header-6 text-center'>Road Tax Exp Date</p>
               <p className='header-6 text-center'>Puspakom Exp Date</p>
               <p className='header-6 text-center'>Petrol Card Number</p>

@@ -33,7 +33,7 @@ function WorkerPage(props) {
             <p className='header-5 primary-color bold'>Workers</p>
             <div className='spacer spacer-height-lg' />
             <div className='table-title worker-table-title'>
-              <p className='header-6'>Name</p>
+              <p className='header-6 text-center'>Name</p>
               <p className='header-6 text-center'>Wage</p>
               <p className='header-6 text-center'>Phone</p>
               <p className='header-6 text-center'>Date Joined</p>

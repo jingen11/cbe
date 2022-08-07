@@ -6,6 +6,7 @@ import {format} from 'date-fns';
 import Modal from '../../components/Modal';
 import TextField from '../../components/TextField';
 import Button from '../../components/Button';
+import Dropdown from '../../components/Dropdown';
 
 import { addWorker, editWorker, removeWorker } from '../../actions';
 
@@ -206,6 +207,7 @@ export default function WorkerModal(props) {
           <TextField fieldName='wage' label='Wage' value={wage} placeholder='70' textOnChanged={wageOnChange} />
           <TextField fieldName='phoneNumber' label='Phone No.'value={phoneNumber}  placeholder='012-5138019' textOnChanged={phoneOnChange} />
           <TextField fieldName='dateJoined' type='date' value={dateJoined} label='Date Joined' placeholder='10/04/1996' textOnChanged={dateJoinedOnChange} />
+          <Dropdown fieldName='vehicle' label='Vehicle'/>
           <TextField fieldName='vehicle' label='Vehicle' value={vehicle} placeholder='PLV6874' textOnChanged={vehicleOnChange} />
           <div className='form-button flex flex-vertical'>
             <p className={`body-text-1 error-text ${error ? "error-text--active" : ""}`}>{error ? error : "error placeholder"}</p>

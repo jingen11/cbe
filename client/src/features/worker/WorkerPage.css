@@ -21,6 +21,10 @@
   justify-self: center;
 }
 
+.table-title.worker-table-title p:first-child{
+  text-align: left;
+}
+
 .list-row.worker-row {
   padding: 0.8rem 1.6rem;
   grid-template-columns: 6rem 1fr 9.6rem 9.6rem 9.6rem 9.6rem;

@@ -71,16 +71,6 @@ export default function VehicleModal(props) {
       return;
     }
 
-    else if (petrolCardNum.trim() === '') {
-      setError('petrol card number cannot be empty');
-      return;
-    }
-
-    else if (touchNGoCardNum.trim() === '') {
-      setError('name cannot be empty');
-      return;
-    }
-
     setError('');
 
     if(props.mode === 0)
