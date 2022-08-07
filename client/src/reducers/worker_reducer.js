@@ -3,6 +3,7 @@ import Worker from '../models/worker';
 
 
 const workerReducer = (state = { workers: [], error: null }, action) => {
+  console.log(state.workers);
   if (action.type === Actions.Workers.get) {
     const fetchedWorkers = [];
 
@@ -15,7 +16,7 @@ const workerReducer = (state = { workers: [], error: null }, action) => {
     };
   }
   if (action.type === Actions.Workers.add) {
-    const fetchedWorkers = state.workers.map((worker)=> worker);
+    const fetchedWorkers = state.workers.map((worker) => worker);
 
     fetchedWorkers.push(new Worker(action.payload.data));
 
@@ -26,12 +27,12 @@ const workerReducer = (state = { workers: [], error: null }, action) => {
   }
 
   if (action.type === Actions.Workers.edit) {
-    const fetchedWorkers = state.workers.map((worker)=> worker);
+    const fetchedWorkers = state.workers.map((worker) => worker);
 
-    for(const worker of fetchedWorkers)
-      if( worker.id === action.payload.data.id )
-        worker.update( action.payload.data );
-    
+    for (const worker of fetchedWorkers)
+      if (worker.id === action.payload.data.id)
+        worker.update(action.payload.data);
+
     return {
       workers: fetchedWorkers,
       error: null,
@@ -41,22 +42,29 @@ const workerReducer = (state = { workers: [], error: null }, action) => {
   if (action.type === Actions.Workers.remove) {
     const fetchedWorkers = [];
 
-    for(const worker of state.workers){
-      if(worker.id !== action.payload.workerId){
+    for (const worker of state.workers) {
+      if (worker.id !== action.payload.workerId) {
         fetchedWorkers.push(worker);
       }
     }
-    
+
     return {
       workers: fetchedWorkers,
       error: null,
     };
   }
 
-  if(action.type === Actions.Workers.error){
+  if (action.type === Actions.Workers.error) {
     console.log(action.payload);
 
     return state;
+  }
+
+  if (action.type === Actions.Auths.clearMemory || action.type === Actions.Auths.logout) {
+    return {
+      workers: [],
+      error: null,
+    };
   }
 
   return state;

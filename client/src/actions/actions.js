@@ -5,6 +5,7 @@ export const Actions = {
     logout: "auths/logout",
     register: "auths/register",
     checkSession: "auth/checkSession",
+    clearMemory: "auth/clearMemory",
     error: "auths/error",
     removeError: "auths/removeError",
   },

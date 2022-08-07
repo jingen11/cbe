@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { Outlet, useNavigate } from 'react-router-dom';
 
-import { checkSession } from '../../actions';
+import { checkSession, getWorkers, getVehicles, clearMemory } from '../../actions';
 import User from '../../models/user';
 
 import Drawer from './Drawer';
@@ -19,8 +19,14 @@ function HomePage(props) {
     useEffect(() => {
         if (props.auth.user instanceof User && !props.auth.user.username) {
             navigate("/login");
+            dispatch(clearMemory());
         }
-    }, [props.auth, navigate]);
+
+        else {
+            dispatch(getWorkers());
+            dispatch(getVehicles());
+        }
+    }, [props.auth, navigate, dispatch]);
 
 
     return (

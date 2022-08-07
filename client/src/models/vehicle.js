@@ -6,9 +6,9 @@ export default class Vehicle {
     petrolCardNum;
     touchNGoCardNum;
     active;
-  
+
     constructor(aux) {
-        if (aux) {    
+        if (aux) {
             this.id = aux.id;
             this.registrationNum = aux.registrationNum;
             this.roadTaxExpDate = aux.roadTaxExpDate ? aux.roadTaxExpDate : null;
@@ -18,24 +18,24 @@ export default class Vehicle {
             this.active = aux.active !== null ? aux.active : false;
         }
     }
-  
+
     toAux() {
-      return (
-        {  
-            id: this.id,
-            registrationNum: this.registrationNum,
-            roadTaxExpDate: this.roadTaxExpDate,
-            puspakomExpDate: this.puspakomExpDate,
-            petrolCardNum: this.petrolCardNum,
-            touchNGoCardNum: this.touchNGoCardNum,
-            active: this.active
-        });
+        return (
+            {
+                id: this.id,
+                registrationNum: this.registrationNum,
+                roadTaxExpDate: this.roadTaxExpDate,
+                puspakomExpDate: this.puspakomExpDate,
+                petrolCardNum: this.petrolCardNum,
+                touchNGoCardNum: this.touchNGoCardNum,
+                active: this.active
+            });
     }
 
-    update( newProps ){
+    update(newProps) {
         const modifiedProps = {
             id: this.id,
-            registrationNum: newProps.registrationNum ? newProps.registrationNum : this.registrationNum, 
+            registrationNum: newProps.registrationNum ? newProps.registrationNum : this.registrationNum,
             roadTaxExpDate: newProps.roadTaxExpDate ? newProps.roadTaxExpDate : this.roadTaxExpDate,
             puspakomExpDate: newProps.puspakomExpDate ? newProps.puspakomExpDate : this.puspakomExpDate,
             petrolCardNum: newProps.petrolCardNum ? newProps.petrolCardNum : this.petrolCardNum,
@@ -49,4 +49,3 @@ export default class Vehicle {
         this.touchNGoCardNum = modifiedProps.touchNGoCardNum;
     }
 };
-  
