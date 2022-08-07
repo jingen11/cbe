@@ -25,7 +25,7 @@ router.post('/', upload.single('icImage'), function (req, res) {
                     wage: req.body.wage,
                     phoneNumber: req.body.phoneNumber,
                     dateJoined: new Date(req.body.dateJoined),
-                    vehicle: req.body.vehicle
+                    vehicleId: req.body.vehicle
                 });
 
             return res.json(
@@ -39,7 +39,7 @@ router.post('/', upload.single('icImage'), function (req, res) {
     })();
 });
 
-router.patch('/:workerId', upload.single('icImage'), function( req, res ){
+router.patch('/:workerId', upload.single('icImage'), function (req, res) {
     (async function () {
         try {
             const worker = Model.Worker.byId[req.params.workerId];
@@ -51,7 +51,7 @@ router.patch('/:workerId', upload.single('icImage'), function( req, res ){
                 wage: req.body.wage,
                 phoneNumber: req.body.phoneNumber,
                 dateJoined: new Date(req.body.dateJoined),
-                vehicle: req.body.vehicle
+                vehicleId: req.body.vehicle
             })
 
             return res.json(
@@ -60,13 +60,14 @@ router.patch('/:workerId', upload.single('icImage'), function( req, res ){
                     'data': worker.toAux()
                 });
         } catch (error) {
+            console.log(error);
             return res.json({ error: error.message });
         }
     })();
 });
 
-router.delete('/:workerId', function( req, res ){
-    (async function(){
+router.delete('/:workerId', function (req, res) {
+    (async function () {
         try {
             await Model.Worker.delete(Model.Worker.byId[req.params.workerId]);
 

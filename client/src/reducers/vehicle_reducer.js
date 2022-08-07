@@ -3,7 +3,6 @@ import Vehicle from '../models/vehicle';
 
 
 const vehicleReducer = (state = { vehicles: [], error: null }, action) => {
-  console.log(state.vehicles);
   if (action.type === Actions.Vehicles.get) {
     const fetchedVehicles = [];
 

@@ -70,7 +70,7 @@ const Api = class {
     try {
       let response;
 
-      if(workerDetails instanceof FormData)
+      if (workerDetails instanceof FormData)
         response = await axios.patch(`/api/workers/${workerDetails.get('id')}`, workerDetails)
 
       else

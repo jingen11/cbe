@@ -1,5 +1,5 @@
 import React from 'react';
-import {format} from 'date-fns';
+import { format } from 'date-fns';
 
 import Card from '../../components/Card';
 
@@ -23,7 +23,7 @@ export default function WorkerRow(props) {
         <p className='body-text-2 light'>{format(new Date(props.worker.dateJoined), 'dd/MM/yyyy')}</p>
       </div>
       <div>
-        <p className='body-text-2 light'>{props.worker.vehicle}</p>
+        <p className='body-text-2 light'>{props.worker.vehicle !== null ? props.worker.vehicle.registrationNum : ''}</p>
       </div>
     </Card>
   );

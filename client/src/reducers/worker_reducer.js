@@ -3,7 +3,6 @@ import Worker from '../models/worker';
 
 
 const workerReducer = (state = { workers: [], error: null }, action) => {
-  console.log(state.workers);
   if (action.type === Actions.Workers.get) {
     const fetchedWorkers = [];
 

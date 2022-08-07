@@ -33,7 +33,7 @@ Worker.prototype.update = async function (newProps) {
         icImagePath: this.icImagePath,
         wage: newProps.wage ? newProps.wage : this.wage,
         dateJoined: newProps.dateJoined ? newProps.dateJoined : this.dateJoined,
-        vehicleId: newProps.vehicle ? newProps.vehicle.id : this.vehicleId
+        vehicleId: newProps.vehicleId ? newProps.vehicleId : this.vehicle.id
     };
 
     if (newProps.icImage) {
@@ -63,7 +63,7 @@ Worker.prototype.update = async function (newProps) {
     this.icImagePath = modifiedProps.icImagePath;
     this.wage = modifiedProps.wage;
     this.dateJoined = modifiedProps.dateJoined;
-    this.vehicle = Modal.Vehicle.byId[modifiedProps.vehicleId];
+    this.vehicle = modifiedProps.vehicleId ? Model.Vehicle.byId[modifiedProps.vehicleId] : null;
 };
 
 Worker.initialise = async function () {
@@ -102,7 +102,7 @@ Worker.newWorker = async function (workerObj) {
         icImagePath: workerObj.icImagePath ? workerObj.icImagePath : null,
         wage: workerObj.wage ? workerObj.wage : null,
         dateJoined: workerObj.dateJoined,
-        vehicleId: workerObj.vehicle ? workerObj.vehicle.id : null
+        vehicleId: workerObj.vehicleId ? workerObj.vehicleId : null
     };
 
     const result = await Database.i.db.collection("workers").insertOne(newWorkerObj);

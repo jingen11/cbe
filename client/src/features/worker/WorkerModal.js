@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
-import {format} from 'date-fns';
+import { connect, useDispatch } from 'react-redux';
+import { format } from 'date-fns';
+
 
 import Modal from '../../components/Modal';
 import TextField from '../../components/TextField';
@@ -10,8 +11,8 @@ import Dropdown from '../../components/Dropdown';
 
 import { addWorker, editWorker, removeWorker } from '../../actions';
 
-export default function WorkerModal(props) {
-  const dateString = format( new Date(), 'yyyy-MM-dd');
+function WorkerModal(props) {
+  const dateString = format(new Date(), 'yyyy-MM-dd');
 
   const dispatch = useDispatch();
 
@@ -26,16 +27,16 @@ export default function WorkerModal(props) {
   const [error, setError] = useState('');
 
 
-  const initModal = function(){
-    if(props.workerDetails !== null && props.mode === 1){
+  const initModal = function () {
+    if (props.workerDetails !== null && props.mode === 1) {
       setImageUrl(`/workers/${props.workerDetails.icImagePath}`);
       setImageFile(null);
       setName(props.workerDetails.name);
       setIcNo(props.workerDetails.icNo);
       setWage(props.workerDetails.wage);
       setPhone(props.workerDetails.phoneNumber);
-      setDateJoined(format( new Date(props.workerDetails.dateJoined), 'yyyy-MM-dd'));
-      setVehicle(props.workerDetails.vehicle?props.workerDetails.vehicle:'' );
+      setDateJoined(format(new Date(props.workerDetails.dateJoined), 'yyyy-MM-dd'));
+      setVehicle(props.workerDetails.vehicle ? props.workerDetails.vehicle.id : '');
     }
   }
 
@@ -106,11 +107,6 @@ export default function WorkerModal(props) {
       return;
     }
 
-    else if (vehicle.trim() === '') {
-      setError('vehicle cannot be empty');
-      return;
-    }
-
     setError('');
 
     if (imageFile) {
@@ -122,17 +118,16 @@ export default function WorkerModal(props) {
       data.append("phoneNumber", phoneNumber);
       data.append("dateJoined", dateJoined);
       data.append("vehicle", vehicle);
-    
-      if(props.mode === 0)
+
+      if (props.mode === 0)
         dispatch(addWorker(data));
 
-      else
-      {
+      else {
         data.append("id", props.workerDetails.id);
         dispatch(editWorker(data));
       }
     } else {
-      if(props.mode === 0)
+      if (props.mode === 0)
         dispatch(addWorker({
           name,
           icNo,
@@ -157,7 +152,7 @@ export default function WorkerModal(props) {
     disposeModal();
   }
 
-  const deleteWorker = function (e){
+  const deleteWorker = function (e) {
     e.preventDefault();
 
     dispatch(removeWorker(props.workerDetails.id));
@@ -182,7 +177,7 @@ export default function WorkerModal(props) {
     <Modal isOpen={props.isOpen} closeModal={disposeModal} parent={'#worker-page'} initModal={initModal}>
       <React.Fragment>
         <p className='header-5 primary-color bold'>
-          {props.mode === 0 ?'New Worker': 'Edit Worker'}
+          {props.mode === 0 ? 'New Worker' : 'Edit Worker'}
         </p>
         <div className='spacer spacer-height-md' />
         <div className='grid grid-2-cols worker-form'>
@@ -205,22 +200,21 @@ export default function WorkerModal(props) {
           <TextField fieldName='name' label='Name' value={name} placeholder='Worker name' textOnChanged={nameOnChange} />
           <TextField fieldName='ic' label='Ic No.' value={icNo} placeholder='960410-07-5565' textOnChanged={icNoOnChange} />
           <TextField fieldName='wage' label='Wage' value={wage} placeholder='70' textOnChanged={wageOnChange} />
-          <TextField fieldName='phoneNumber' label='Phone No.'value={phoneNumber}  placeholder='012-5138019' textOnChanged={phoneOnChange} />
+          <TextField fieldName='phoneNumber' label='Phone No.' value={phoneNumber} placeholder='012-5138019' textOnChanged={phoneOnChange} />
           <TextField fieldName='dateJoined' type='date' value={dateJoined} label='Date Joined' placeholder='10/04/1996' textOnChanged={dateJoinedOnChange} />
-          <Dropdown fieldName='vehicle' label='Vehicle'/>
-          <TextField fieldName='vehicle' label='Vehicle' value={vehicle} placeholder='PLV6874' textOnChanged={vehicleOnChange} />
+          <Dropdown fieldName='vehicle' label='Vehicle' value={vehicle} selections={props.vehicles.vehicles.map((vehicle) => ({ name: vehicle.registrationNum, value: vehicle.id }))} onChanged={vehicleOnChange} />
           <div className='form-button flex flex-vertical'>
             <p className={`body-text-1 error-text ${error ? "error-text--active" : ""}`}>{error ? error : "error placeholder"}</p>
             <div className='spacer spacer-height-sm' />
             <Button className='submit-button' onClick={submitForm}>
               <p className="body-text-2 bold">
-              {props.mode === 0 ?'Submit': 'Edit'}
+                {props.mode === 0 ? 'Submit' : 'Edit'}
               </p>
             </Button>
           </div>
-          {props.mode === 1? <Button className="form-button error-button" onClick={deleteWorker}>
+          {props.mode === 1 ? <Button className="form-button error-button" onClick={deleteWorker}>
             <p className="body-text-2 bold">Delete</p>
-            </Button>: null}
+          </Button> : null}
         </div>
       </React.Fragment>
     </Modal>
@@ -233,3 +227,9 @@ WorkerModal.propTypes = {
   toggleModal: PropTypes.func,
   workerDetails: PropTypes.object,
 }
+
+const mapStateToProps = (state) => ({
+  vehicles: state.vehicles,
+});
+
+export default connect(mapStateToProps, null)(WorkerModal);
