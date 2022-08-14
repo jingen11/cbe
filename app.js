@@ -1,15 +1,9 @@
 
-const { createServer } = require("http");
-
 const express = require("express");
 const app = module.exports = express();
 
 const bodyParser = require("body-parser");
 const session = require("express-session");
-
-const socketIo = require('./socket');
-const httpServer = createServer(app);
-socketIo(httpServer);
 
 const authRoute = require('./routes/auth_route');
 const workerRoute = require('./routes/worker_route');
@@ -43,7 +37,7 @@ app.use((err, req, res, next) => {
 });
 
 app.on('ready', function () {
-    httpServer.listen(4000, () => {
+    app.listen(4000, () => {
         return console.log("app listening on port 4000");
     });
 });
