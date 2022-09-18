@@ -29,6 +29,12 @@ app.use(
 
 app.use(express.static(__dirname + '/images'));
 
+app.use(express.static(__dirname + '/build'));
+
+app.get('/', function (req, res) {
+    res.sendFile(__dirname + '/build' + 'index.html');
+});
+
 app.use("/api/auth", authRoute);
 app.use("/api/workers", workerRoute);
 app.use("/api/vehicles", vehicleRoute);
@@ -39,7 +45,7 @@ app.use((err, req, res, next) => {
 });
 
 app.on('ready', function () {
-    app.listen(4000, () => {
-        return console.log("app listening on port 4000");
+    app.listen(process.env.port, () => {
+        return console.log(`app listening on port ${process.env.port}`);
     });
 });
