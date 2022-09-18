@@ -65,22 +65,25 @@ Worker.prototype.update = async function (newProps) {
     this.dateJoined = modifiedProps.dateJoined;
     this.vehicle = modifiedProps.vehicleId ? Model.Vehicle.byId[modifiedProps.vehicleId] : null;
 };
-Worker.prototype.attend = async function (date, vehicle) {
+Worker.prototype.attend = async function (date, vehicleId) {
     if (!date) {
         throw new error('please provide attendance date');
     }
 
-    const assignedVehicle = vehicle ? Model.Vehicle.byId[vehicle] : null;
+    const assignedVehicle = vehicleId ? Model.Vehicle.byId[vehicleId] : null;
 
     const data = {
         date: date,
-        user: this,
+        worker: this,
         vehicle: assignedVehicle
     }
 
     const attendance = await Model.Attendance.addAttendance(data);
 
     return attendance;
+}
+Worker.prototype.absent = async function (date) {
+    await Model.Attendance.delete(this.id, date);
 }
 
 Worker.initialise = async function () {

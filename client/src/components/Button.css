@@ -19,10 +19,18 @@
     outline: var(--primary-color-w300-transparent) solid 0.6rem;
 }
 
-.error-button{
+.error-button {
     background-color: var(--error-color);
 }
 
-.error-button:hover{
+.error-button:hover {
     background-color: var(--error-color-transparent);
+}
+
+.success-button {
+    background-color: var(--green-color);
+}
+
+.success-button:hover {
+    background-color: var(--green-color-transparent);
 }

@@ -44,11 +44,11 @@ export const logOut = () => {
 }
 
 export const getWorkers = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
       const result = await CbeApi.getWorkers();
 
-      dispatch({ type: Actions.Workers.get, payload: result });
+      dispatch({ type: Actions.Workers.get, payload: { ...result, state: getState() } });
     } catch (error) {
       dispatch({ type: Actions.Workers.error, payload: error.message });
     }
@@ -158,6 +158,36 @@ export const removeVehicle = (vehicleId) => {
         dispatch({ type: Actions.Vehicles.error, payload: result.error });
     } catch (error) {
       dispatch({ type: Actions.Vehicles.error, payload: error.message });
+    }
+  }
+}
+
+export const getAttendances = (dateRange, workerIds) => {
+  return async (dispatch, getState) => {
+    try {
+      const result = await CbeApi.getAttendances(dateRange, workerIds);
+
+      if (!result.error)
+        dispatch({ type: Actions.Attendances.get, payload: { ...result, state: getState() } });
+      else
+        dispatch({ type: Actions.Attendances.error, payload: result.error });
+    } catch (error) {
+      dispatch({ type: Actions.Attendances.error, payload: error.message });
+    }
+  }
+}
+
+export const addAttendances = (attendances) => {
+  return async (dispatch, getState) => {
+    try {
+      const result = await CbeApi.addAttendances(attendances);
+
+      if (!result.error)
+        dispatch({ type: Actions.Attendances.add, payload: { ...result, state: getState(), updatedAttendances: attendances } });
+      else
+        dispatch({ type: Actions.Attendances.error, payload: result.error });
+    } catch (error) {
+      dispatch({ type: Actions.Attendances.error, payload: error.message });
     }
   }
 }

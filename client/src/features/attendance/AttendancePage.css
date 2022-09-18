@@ -1,0 +1,58 @@
+.grid.calander-grid {
+  grid-template-columns: 4.8rem 1fr 4.8rem;
+  column-gap: 1.2rem;
+}
+
+.grid.date-card-grid {
+  column-gap: 1.2rem;
+}
+
+.date-card {
+  background-color: var(--primary-color-w300-transparent);
+  color: var(--primary-color-w500);
+  padding: 2.4rem;
+  border-radius: 1.6rem;
+  align-self: center;
+  border: 0.2rem solid transparent;
+}
+
+.date-card--future {
+  background-color: var(--disable-color);
+}
+
+.date-card--selected {
+  background-color: white;
+  box-shadow: 0.4rem 0.6rem 2rem var(--primary-color-w300);
+  border: 0.2rem solid var(--primary-color-w500);
+}
+
+td.present {
+  color: var(--green-color);
+}
+
+td.absent {
+  color: var(--error-color)
+}
+
+td.present-modified {
+  color: white;
+  background-color: var(--green-color);
+  margin: 0.8rem 0;
+}
+
+td.absent-modified {
+  color: white;
+  background-color: var(--error-color);
+  margin: 0.8rem 0;
+}
+
+.action-row {
+  justify-content: flex-end;
+  margin-top: 2.4rem;
+  padding: 0 2.4rem;
+}
+
+.actions {
+  gap: 0.8rem;
+  width: 60rem;
+}

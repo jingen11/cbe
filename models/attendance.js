@@ -1,4 +1,4 @@
-class Attendance {
+module.exports = class Attendance {
   id;
   worker;
   vehicle;
@@ -11,6 +11,15 @@ class Attendance {
       this.vehicle = aux.vehicleId ? Model.Vehicle.byId[aux.vehicleId] : null;
       this.date = aux.date;
     }
+  }
+
+  toAux() {
+    return {
+      id: this.id,
+      workerId: this.worker.id,
+      vehicleId: this.vehicle.id,
+      date: this.date
+    };
   }
 
   async update(attendanceDetails) {
@@ -26,33 +35,45 @@ class Attendance {
     this.vehicle = modifiedProps.vehicleId !== null ? Model.Vehicle.byId[modifiedProps.vehicleId] : null;
   }
 
-  async delete(attendanceId) {
-    await Database.i.db.collection("attendances").deleteOne({ _id: Database.i.mongodb.ObjectId(attendanceId) });
+  static async delete(workerId, date) {
+    if (!(date instanceof Date))
+      throw new Error('date must be an instance of Date');
+
+    await Database.i.db.collection("attendances").deleteOne({ date: date, workerId: workerId });
   }
 
   static async addAttendance(attendanceDetails) {
-    if (!attendanceDetails.date)
+    if (!(attendanceDetails.date instanceof Date))
       throw new Error('date must be provided');
 
-    if (attendanceDetails.worker instanceof Model.Worker)
+    if (!attendanceDetails.worker instanceof Model.Worker)
       throw new Error('worker must be instance of Model.Worker');
 
     const newDetails = {
-      workerId: attendanceDetails.workerId,
+      workerId: attendanceDetails.worker.id,
       date: attendanceDetails.date,
-      vehicleId: attendanceDetails.vehicleId
+      vehicleId: attendanceDetails.vehicle.id
     }
 
-    const result = await Database.i.db.collection("attendances").insertOne(newDetails);
-    newDetails._id = result.insertedId;
+    try {
+      const result = await Database.i.db.collection("attendances").insertOne(newDetails);
+      newDetails._id = result.insertedId;
 
-    const newAttendance = new Attendance(newDetails);
+      const newAttendance = new Attendance(newDetails);
 
-    return newAttendance;
+      return newAttendance;
+    } catch (error) {
+      if (error.code !== 11000)
+        throw error;
+
+      else {
+        return (await Attendance.getAttendance(newDetails.date, newDetails.date, [newDetails.workerId]))[0];
+      }
+    }
   }
 
   static async getAttendance(from, to, workerIds) {
-    const attendances = [];
+    let attendances = [];
     if (!(from instanceof Date) || !(to instanceof Date)) {
       throw new Error('from and to must be instance of Date');
     }
@@ -61,7 +82,7 @@ class Attendance {
       throw new Error('workerIds must be instance of Array');
     }
 
-    await Database.i.db.collection("attendances").find({ date: { $lte: from, $gte: to }, workerId: { $in: workerIds } })
+    await Database.i.db.collection("attendances").find({ date: { $lte: new Date(to), $gte: new Date(from) }, workerId: { $in: workerIds } })
       .sort({ date: -1 }).forEach((attendance) => { attendances.push(new Attendance(attendance)) });
 
     return attendances;

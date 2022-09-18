@@ -143,6 +143,30 @@ const Api = class {
       throw error;
     }
   }
+
+  getAttendances = async function (dateRange, workerIds) {
+    try {
+      const response = await axios.get("/api/attendances", { params: { from: dateRange.from, to: dateRange.to, workerIds: workerIds } });
+
+      if (response.status === 200) return response.data;
+
+      else throw new Error(response.statusText);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  addAttendances = async function (attendances) {
+    try {
+      const response = await axios.post("/api/attendances", { workers: attendances });
+
+      if (response.status === 200) return response.data;
+
+      else throw new Error(response.statusText);
+    } catch (error) {
+      throw error;
+    }
+  }
 };
 
 export const CbeApi = Object.freeze(new Api());;

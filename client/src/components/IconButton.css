@@ -15,3 +15,11 @@
 .icon-button:hover {
     background-color: var(--primary-color-w500);
 }
+
+.icon-button.icon-button--clear:focus {
+    outline: none;
+}
+
+.icon-button.icon-button--clear:hover {
+    background-color: var(--primary-color-w300-transparent);
+}

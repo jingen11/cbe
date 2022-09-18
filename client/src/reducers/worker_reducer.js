@@ -5,9 +5,16 @@ import Worker from '../models/worker';
 const workerReducer = (state = { workers: [], error: null }, action) => {
   if (action.type === Actions.Workers.get) {
     const fetchedWorkers = [];
+    for (const workerId in action.payload.data) {
+      for (const vehicle of action.payload.state.vehicles.vehicles) {
+        if (vehicle.id === action.payload.data[workerId].vehicle.id) {
+          action.payload.data[workerId]['vehicle'] = vehicle;
+        }
+      }
 
-    for (const workerObj in action.payload.data)
-      fetchedWorkers.push(new Worker(action.payload.data[workerObj]));
+      fetchedWorkers.push(new Worker(action.payload.data[workerId]));
+    }
+
 
     return {
       workers: fetchedWorkers,

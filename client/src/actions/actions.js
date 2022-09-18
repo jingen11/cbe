@@ -22,5 +22,12 @@ export const Actions = {
     edit: "vehicles/edit",
     remove: "vehicles/remove",
     error: "vehicles/error",
+  },
+  Attendances: {
+    get: "attendances/get",
+    add: "attendances/add",
+    edit: "attendances/edit",
+    remove: "attendances/remove",
+    error: "attendances/error",
   }
 };

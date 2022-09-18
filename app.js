@@ -8,6 +8,7 @@ const session = require("express-session");
 const authRoute = require('./routes/auth_route');
 const workerRoute = require('./routes/worker_route');
 const vehicleRoute = require('./routes/vehicle_route');
+const attendanceRoute = require('./routes/attendance_route');
 
 app.use(
     bodyParser.urlencoded({ extended: true })
@@ -31,6 +32,7 @@ app.use(express.static(__dirname + '/images'));
 app.use("/api/auth", authRoute);
 app.use("/api/workers", workerRoute);
 app.use("/api/vehicles", vehicleRoute);
+app.use("/api/attendances", attendanceRoute);
 
 app.use((err, req, res, next) => {
     console.error(err.stack);

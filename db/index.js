@@ -13,6 +13,7 @@ Database.prototype.initialise = async function (app) {
         await this.client.connect();
         this.db = this.client.db('cbe');
         this.db.collection("users").createIndex({ username: 1 }, { unique: true });
+        this.db.collection("attendances").createIndex({ workerId: 1, date: 1 }, { unique: true });
 
         console.log('mongodb client connected');
         app.emit('ready');

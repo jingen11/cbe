@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './IconButton.css';
 
 function IconButton(props) {
-  return (<button className="icon-button" type="button" onClick={props.onClick}>
+  return (<button className={`icon-button ${props.className}`} type="button" onClick={props.onClick}>
     {props.children}
   </button>);
 }
