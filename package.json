@@ -7,7 +7,7 @@
     "server": "nodemon server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "prod": "NODE_ENV=production node server"
+    "prod": "NODE_ENV=production dbUsername=cbe_admin dbPassword=Cheam1996 dbName=cbe-prod port=4000 node server"
   },
   "author": "",
   "license": "ISC",
