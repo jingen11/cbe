@@ -1,6 +1,8 @@
 
 const express = require("express");
 const app = module.exports = express();
+const https = require('https');
+const fs = require('fs');
 
 const bodyParser = require("body-parser");
 const session = require("express-session");
@@ -9,6 +11,12 @@ const authRoute = require('./routes/auth_route');
 const workerRoute = require('./routes/worker_route');
 const vehicleRoute = require('./routes/vehicle_route');
 const attendanceRoute = require('./routes/attendance_route');
+
+const httpsOptions = {
+    cert: fs.readFileSync('./ssl/je-dev_com.crt'),
+    ca: fs.readFileSync('./ssl/je-dev_com.ca-bundle'),
+    key: fs.readFileSync('./ssl/je_dev.key')
+}
 
 app.use(
     bodyParser.urlencoded({ extended: true })
@@ -45,7 +53,10 @@ app.use((err, req, res, next) => {
 });
 
 app.on('ready', function () {
-    app.listen(process.env.port, () => {
-        return console.log(`app listening on port ${process.env.port}`);
-    });
+    const httpsServer = https.createServer(httpsOptions, app);
+
+    httpsServer.listen(process.env.port);
+    // app.listen(process.env.port, () => {
+    //     return console.log(`app listening on port ${process.env.port}`);
+    // });
 });
