@@ -2,7 +2,6 @@
 const mongodb = require('mongodb');
 
 const Database = global.Database = function () {
-    console.log(process.env)
     this.mongodb = mongodb;
     this.uri = process.env.NODE_ENV === 'production' ? `mongodb+srv://${process.env.dbUsername}:${process.env.dbPassword}@${process.env.dbName}.lhukfkf.mongodb.net/?retryWrites=true&w=majority` : `mongodb+srv://${process.env.dbUsername}:${process.env.dbPassword}@${process.env.dbName}.5dvkf.mongodb.net/?retryWrites=true&w=majority`;
 
