@@ -13,9 +13,9 @@ const vehicleRoute = require('./routes/vehicle_route');
 const attendanceRoute = require('./routes/attendance_route');
 
 const httpsOptions = {
-    cert: fs.readFileSync('./ssl/je-dev_com.crt'),
-    ca: fs.readFileSync('./ssl/je-dev_com.ca-bundle'),
-    key: fs.readFileSync('./ssl/je_dev.key')
+    cert: fs.readFileSync('./ssl/cheambrothers-ent_com.crt'),
+    ca: fs.readFileSync('./ssl/cheambrothers-ent_com.ca-bundle'),
+    key: fs.readFileSync('./ssl/cheambrothers.key')
 }
 
 app.use(
